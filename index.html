@@ -558,7 +558,7 @@
     </div>
 
     <script>
-        const APP_VERSION = "0.6.2.4";
+        const APP_VERSION = "0.7.1.0";
 
         window.addEventListener('error', function(e) {
             const sb = document.getElementById('statusBar');
@@ -866,7 +866,7 @@
         let dict = {...defaultDict};
         try { const stored = localStorage.getItem('ruggerDict'); if(stored) dict = {...defaultDict, ...JSON.parse(stored)}; } catch(e) {}
 
-        const STATE_KEY = 'ruggerMatch_v05228_state';
+        const STATE_KEY = 'ruggerMatch_v0710_state';
         
         let st = { 
             matchId: null,
