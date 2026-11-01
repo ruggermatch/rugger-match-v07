@@ -558,7 +558,7 @@
     </div>
 
     <script>
-        const APP_VERSION = "0.7.1.0";
+        const APP_VERSION = "0.7.1.1";
 
         window.addEventListener('error', function(e) {
             const sb = document.getElementById('statusBar');
@@ -628,8 +628,9 @@
 
         window.addEventListener('online', processQueue);
 
-        async function sendAuditLog(triggerReason = 'LOGIN_AUTOMATICO') {
-            if (!currentUser) return;
+        async function sendAuditLog(triggerReason = 'LOGIN_AUTOMATICO', auditData = null) {
+            const userToLog = auditData || currentUser;
+            if (!userToLog) return;
 
             const today = new Date().toDateString();
             const lastLog = localStorage.getItem('ruggerLastLogDate');
@@ -639,9 +640,10 @@
             const logPayload = {
                 action: 'logAccess',
                 timestamp: getFullTimestamp(),
-                userId: currentUser.id,
-                email: currentUser.email,
+                userId: userToLog.id,
+                email: userToLog.email,
                 trigger: triggerReason,
+                status: triggerReason.startsWith('ACCESO_DENEGADO') ? 'FAILED' : 'SUCCESS',
                 version: APP_VERSION,
                 userAgent: navigator.userAgent
             };
@@ -663,8 +665,12 @@
                 });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    localStorage.setItem('ruggerLastLogDate', today);
-                    if (triggerReason === 'FORZADO_MANUAL') showAppAlert("Log registrado correctamente en la base de datos.", "Éxito");
+                    if (triggerReason === 'LOGIN_AUTOMATICO') {
+                        localStorage.setItem('ruggerLastLogDate', today);
+                    }
+                    if (triggerReason === 'FORZADO_MANUAL') {
+                        showAppAlert("Log registrado correctamente en la base de datos.", "Éxito");
+                    }
                 } else {
                     showAppAlert("Error devuelto por Apps Script:\n" + result.message, "Fallo en Backend");
                 }
@@ -677,9 +683,15 @@
             const payload = parseJwt(response.credential);
             const userId = payload.sub;
 
-            const allowedUsers = ["111156861575560627970", "103537033993342212835"]; 
+            const allowedUsers = ["111156861575560627970", "103537033993342212835", "109839816249633725397", "106656794410349860754"]; 
 
             if (!allowedUsers.includes(userId)) {
+                sendAuditLog('ACCESO_DENEGADO_WHITELIST', {
+                    id: userId,
+                    email: payload.email,
+                    name: payload.name
+                });
+
                 showAppAlert("Acceso denegado. Pasa este ID al admin: " + userId, "Error");
                 return; 
             }
