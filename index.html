@@ -34,9 +34,11 @@
         .card { margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
         .form-group { margin-bottom: 12px; text-align: left; }
         .form-group label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 4px; color: #475569; }
-        .form-control { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; }
         .btn-primary { width: 100%; background: var(--secondary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
         .btn-danger { background: var(--danger); color: white; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+        .btn-sm-action { background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; color: var(--primary); }
+        .btn-sm-action:hover { background: #cbd5e1; }
 
         .setup-container { display: flex; flex-direction: column; height: 100%; }
         .setup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-shrink: 0; }
@@ -212,9 +214,9 @@
         
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(15, 23, 42, 0.7); z-index: 1000; align-items:center; justify-content:center; backdrop-filter: blur(2px);}
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; padding: 24px; border-radius: 10px; width: 95vw; max-width: 1200px; max-height: 90vh; display: flex; flex-direction: column;}
+        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 95vw; max-width: 1250px; max-height: 92vh; display: flex; flex-direction: column;}
         
-        #dictForm { flex:1; overflow-y:auto; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; align-items: start; align-content: start;}
+        #dictForm { flex:1; overflow-y:auto; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 15px; align-items: start; align-content: start;}
         
         #touch-popup {
             display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -245,6 +247,9 @@
             border-radius: 4px; font-weight: bold; cursor: pointer; transition: transform 0.2s;
         }
         #update-banner button:active { transform: scale(0.95); }
+        
+        .btn-delete-item { background: transparent; border: none; color: var(--danger); font-size: 0.85rem; cursor: pointer; padding: 2px 4px; font-weight: bold; }
+        .btn-delete-item:hover { filter: brightness(1.2); }
     </style>
 </head>
 <body>
@@ -362,17 +367,40 @@
         </div>
     </div>
 
+    <!-- Modal de configuración avanzada, diccionario, módulos y fases -->
     <div id="modal-settings" class="modal-overlay">
         <div class="modal-content">
-            <h3 style="margin-top:0;">Organización de Módulos y Diccionario <span id="version-settings" style="font-size: 0.8rem; color: #64748b; font-weight: normal; cursor: pointer;" title="Triple clic para forzar log de acceso"></span></h3>
-            <p id="dictLockWarning" style="font-size:0.85rem; color:var(--danger); font-weight:bold; display:none; background:#fef2f2; padding:8px; border-radius:4px; border:1px solid #fecaca; margin-bottom:10px;">🔒 Layout bloqueado: Partido en curso.</p>
-            <p style="font-size:0.8rem; color:#64748b; margin-bottom: 10px;">Selecciona en qué módulo debe aparecer cada fase y renómbralas si es necesario.</p>
-            
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; flex-shrink: 0; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <h3 style="margin:0;">Organización de Módulos y Diccionario <span id="version-settings" style="font-size: 0.8rem; color: #64748b; font-weight: normal; cursor: pointer;" title="Triple clic para forzar log de acceso"></span></h3>
+                    <p id="dictLockWarning" style="font-size:0.8rem; color:var(--danger); font-weight:bold; display:none; margin: 4px 0 0 0;">🔒 Layout bloqueado: Partido en curso.</p>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button class="btn-sm-action" onclick="exportLayoutConfig()" title="Descargar archivo JSON con tu diseño visual">📤 Exportar JSON</button>
+                    <button class="btn-sm-action" onclick="document.getElementById('file-import-config').click()" title="Cargar archivo JSON">📥 Importar JSON</button>
+                    <input type="file" id="file-import-config" accept=".json" style="display:none;" onchange="importLayoutConfig(event)">
+                    <button class="btn-sm-action" style="background:var(--secondary); color:white;" onclick="toggleNewModulePanel()">➕ Crear Módulo</button>
+                </div>
+            </div>
+
+            <!-- Panel desplegable para crear módulo -->
+            <div id="new-module-panel" style="display:none; background:#f1f5f9; padding:10px; border-radius:6px; margin-bottom:10px; border:1px solid #cbd5e1; flex-shrink:0;">
+                <h5 style="margin:0 0 8px 0; color:var(--primary);">Crear Nuevo Módulo</h5>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="text" id="newModIcon" class="form-control" placeholder="Icono (ej. ⚡, 🏉)" style="width:110px;" maxlength="4">
+                    <input type="text" id="newModName" class="form-control" placeholder="Nombre (ej. Balón Parado)" style="flex:1; min-width:140px;">
+                    <input type="text" id="newModDesc" class="form-control" placeholder="Descripción breve..." style="flex:2; min-width:180px;">
+                    <input type="color" id="newModColor" value="#059669" style="width:40px; height:36px; border:none; cursor:pointer; padding:0;">
+                    <button class="btn-sm-action" style="background:var(--success); color:white; height:36px; padding:0 12px;" onclick="addCustomModule()">Guardar Módulo</button>
+                    <button class="btn-sm-action" style="height:36px;" onclick="toggleNewModulePanel()">Cancelar</button>
+                </div>
+            </div>
+
             <div id="dictForm"></div>
             
-            <div style="display:flex; gap:10px; margin-top: 15px; flex-shrink: 0; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-                <button id="btnSaveDict" class="btn-primary" onclick="saveSettings()">Guardar Cambios</button>
-                <button class="btn-primary" style="background:#64748b;" onclick="closeSettings()">Cerrar</button>
+            <div style="display:flex; gap:10px; margin-top: 10px; flex-shrink: 0; border-top: 1px solid #e2e8f0; padding-top: 10px; justify-content:flex-end;">
+                <button id="btnSaveDict" class="btn-primary" style="max-width:200px;" onclick="saveSettings()">Guardar Cambios</button>
+                <button class="btn-primary" style="background:#64748b; max-width:120px;" onclick="closeSettings()">Cerrar</button>
             </div>
         </div>
     </div>
@@ -558,7 +586,7 @@
     </div>
 
     <script>
-        const APP_VERSION = "0.7.1.1";
+        const APP_VERSION = "0.7.1.2";
 
         window.addEventListener('error', function(e) {
             const sb = document.getElementById('statusBar');
@@ -781,44 +809,35 @@
             }
         }
 
-        const MODULES = {
-            ATAQUE: { icon: '⚔️', name: 'Ataque', desc: 'Continuidad, ventaja, rucks.', color: '#8b5cf6' },
-            DEFENSA: { icon: '🛡️', name: 'Defensa', desc: 'Placajes, jackal, presión.', color: '#0284c7' },
-            ESTATICAS: { icon: '📐', name: 'Estáticas', desc: 'Melée, Touch, Salidas.', color: '#f59e0b' },
-            JUEGO_PIE: { icon: '👟', name: 'Juego Pie', desc: 'Patadas y transiciones.', color: '#10b981' }
+        // Definiciones por defecto propuestas (sin comodines estáticos)
+        const DEFAULT_MODULES = {
+            ATAQUE: { icon: '⚔️', name: 'Ataque', desc: 'Continuidad, ventaja, rucks.', color: '#8b5cf6', isCustom: false },
+            DEFENSA: { icon: '🛡️', name: 'Defensa', desc: 'Placajes, jackal, presión.', color: '#0284c7', isCustom: false },
+            ESTATICAS: { icon: '📐', name: 'Estáticas', desc: 'Melée, Touch, Salidas.', color: '#f59e0b', isCustom: false },
+            JUEGO_PIE: { icon: '👟', name: 'Juego Pie', desc: 'Patadas y transiciones.', color: '#10b981', isCustom: false }
         };
 
-        const BASE_GENERAL = [
+        const BASE_GENERAL_PROPOSED = [
             "Touch a favor", "Touch en contra", "Melée a favor", "Melée en contra",
             "Ensayo", "Conversión", "Drop", "Golpe castigo a favor", "Golpe castigo en contra",
-            "Golpe franco a favor", "Golpe franco en contra", "Comodín G1", "Comodín G2"
+            "Golpe franco a favor", "Golpe franco en contra"
         ];
         
-        const MOD_EVENTS = {
+        const BASE_MOD_EVENTS_PROPOSED = {
             ATAQUE: [
                 "Línea de ventaja ganada", "Línea de ventaja no ganada", "Maul", "Ruck",
                 "Placaje >> Ruck", "Placaje en contra", "Patada", "Chute a palos",
-                "Balón perdido", "Comodín A1", "Comodín A2"
+                "Balón perdido"
             ],
             DEFENSA: [
                 "Golpe franco", "Balón adelantado", "Golpe de castigo en contra", "Placaje a favor",
-                "Balón recuperado", "Comodín D1", "Comodín D2"
+                "Balón recuperado"
             ],
-            ESTATICAS: ["Melée Propia", "Melée Rival", "Touch Propia", "Touch Rival", "Maul desde Touch", "Strike Play", "Salida Centro", "Comodín E1", "Comodín E2"],
-            JUEGO_PIE: ["Box Kick", "Up & Under", "Grubber", "Exit", "Cross-kick", "Recepción Aérea", "Comodín P1", "Comodín P2"]
+            ESTATICAS: ["Melée Propia", "Melée Rival", "Touch Propia", "Touch Rival", "Maul desde Touch", "Strike Play", "Salida Centro"],
+            JUEGO_PIE: ["Box Kick", "Up & Under", "Grubber", "Exit", "Cross-kick", "Recepción Aérea"]
         };
 
-        const ALL_MODS_MASTER = {
-            'GENERAL': BASE_GENERAL,
-            'ATAQUE': MOD_EVENTS.ATAQUE,
-            'DEFENSA': MOD_EVENTS.DEFENSA,
-            'ESTATICAS': MOD_EVENTS.ESTATICAS,
-            'JUEGO_PIE': MOD_EVENTS.JUEGO_PIE
-        };
-
-        const ALL_EVENTS = [...new Set([...BASE_GENERAL, ...Object.keys(MOD_EVENTS).flatMap(k => MOD_EVENTS[k])])];
-
-        const SUB_EVENTS = {
+        const BASE_SUB_EVENTS_PROPOSED = {
             "Touch a favor": ["Ganada con presión", "Ganada con 1 pase de calidad (>>9)", "Ganada con 2 pases de calidad (>>10)", "Perdida por mal lanzamiento", "Perdida por salto a destiempo", "Perdida por mala coordinación lanzador-saltador", "Perdida por amago de lanzamiento", "Rápida"],
             "Touch en contra": ["Recuperada", "Perdida"],
             "Melée a favor": ["Ganada con presión", "Ganada con 1 pase de calidad (8>9)", "Ganada con 1 pase de calidad (9>10)", "Ganada con 2 pases de calidad (8>9>10)", "Perdida", "Golpe de castigo a favor", "Golpe de castigo en contra"],
@@ -872,42 +891,72 @@
             '__touchFormations': '2-2-2, 2-3-2, 1-4-1',
             '__touchPositions': '1, 2, 3, 4, 5'
         };
-        ALL_EVENTS.forEach(e => defaultDict[e] = e);
-        Object.keys(SUB_EVENTS).forEach(parent => { SUB_EVENTS[parent].forEach(sub => { defaultDict[`${parent}|${sub}`] = sub; }); });
+        BASE_GENERAL_PROPOSED.forEach(e => defaultDict[e] = e);
+        Object.keys(BASE_MOD_EVENTS_PROPOSED).forEach(k => BASE_MOD_EVENTS_PROPOSED[k].forEach(e => defaultDict[e] = e));
+        Object.keys(BASE_SUB_EVENTS_PROPOSED).forEach(p => BASE_SUB_EVENTS_PROPOSED[p].forEach(s => defaultDict[`${p}|${s}`] = s));
 
         let dict = {...defaultDict};
         try { const stored = localStorage.getItem('ruggerDict'); if(stored) dict = {...defaultDict, ...JSON.parse(stored)}; } catch(e) {}
 
-        const STATE_KEY = 'ruggerMatch_v0710_state';
+        const STATE_KEY = 'ruggerMatch_v0712_state';
         
         let st = { 
             matchId: null,
             mod: 'ATAQUE', team: null, myTeam: 'Local', zone: 'Z4-Central', running: false, time: 0, period: '1ª Parte', pending: null, 
             awaitingZoneFor: null,
             log: [], masterLog: [], redoLog: [], session: 1, timer: null, isFlipped: false, areZonesHidden: false,
-            teams: { Local: { l: 'Local', s: 'LOC' }, Visitante: { l: 'Visitante', s: 'VIS' } },
+            teams: { Local: { l: 'Club Local', s: 'LOC' }, Visitante: { l: 'Club Visitante', s: 'VIS' } },
             stats: { pos: { Local: 0, Visitante: 0 }, ter: { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 } },
-            layout: { modules: {}, colOrder: ['GENERAL', 'MODULO', 'SUBFASES'] },
+            modules: JSON.parse(JSON.stringify(DEFAULT_MODULES)),
+            availablePhases: {
+                'GENERAL': [...BASE_GENERAL_PROPOSED],
+                'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
+                'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA],
+                'ESTATICAS': [...BASE_MOD_EVENTS_PROPOSED.ESTATICAS],
+                'JUEGO_PIE': [...BASE_MOD_EVENTS_PROPOSED.JUEGO_PIE]
+            },
+            customPhases: [],
+            customSubEvents: {},
+            layout: { 
+                modules: {
+                    'GENERAL': [...BASE_GENERAL_PROPOSED],
+                    'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
+                    'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA],
+                    'ESTATICAS': [...BASE_MOD_EVENTS_PROPOSED.ESTATICAS],
+                    'JUEGO_PIE': [...BASE_MOD_EVENTS_PROPOSED.JUEGO_PIE]
+                }, 
+                colOrder: ['GENERAL', 'MODULO', 'SUBFASES'] 
+            },
             editMode: false, moveSource: null, adminUnlocked: false, wasRunningBeforeAdmin: false,
             lastTick: 0 
         };
 
+        function getSubEventsFor(ev) {
+            const baseSubs = BASE_SUB_EVENTS_PROPOSED[ev] || [];
+            const customSubs = (st.customSubEvents && st.customSubEvents[ev]) || [];
+            return [...baseSubs, ...customSubs];
+        }
+
         function setModule(modKey) {
-            if (st.mod === modKey) return;
+            if (!st.modules[modKey]) {
+                const keys = Object.keys(st.modules);
+                modKey = keys[0] || 'ATAQUE';
+            }
             st.mod = modKey;
             
             const mg = document.getElementById('modulesGrid');
             if (mg) {
+                const keys = Object.keys(st.modules);
                 Array.from(mg.children).forEach((card, index) => {
-                    const keys = Object.keys(MODULES);
                     card.classList.toggle('selected', keys[index] === modKey);
                 });
             }
 
+            const modObj = st.modules[st.mod];
             const mb = document.getElementById('moduleBadge');
-            if (mb) {
-                mb.innerText = `${MODULES[st.mod].icon} MÓDULO ${MODULES[st.mod].name.toUpperCase()}`;
-                mb.style.backgroundColor = MODULES[st.mod].color;
+            if (mb && modObj) {
+                mb.innerText = `${modObj.icon} MÓDULO ${modObj.name.toUpperCase()}`;
+                mb.style.backgroundColor = modObj.color;
             }
             
             if (document.getElementById('screen-tracker').classList.contains('active')) {
@@ -995,8 +1044,10 @@
                     matchId: st.matchId,
                     mod: st.mod, time: st.time, period: st.period, log: st.log, masterLog: st.masterLog, redoLog: st.redoLog,
                     session: st.session, teams: st.teams, stats: st.stats, zone: st.zone, myTeam: st.myTeam,
-                    isFlipped: st.isFlipped, areZonesHidden: st.areZonesHidden, sL: sL, sV: sV, layout: st.layout,
-                    lastTick: st.lastTick, awaitingZoneFor: st.awaitingZoneFor
+                    isFlipped: st.isFlipped, areZonesHidden: st.areZonesHidden, sL: sL, sV: sV,
+                    modules: st.modules, availablePhases: st.availablePhases,
+                    customPhases: st.customPhases, customSubEvents: st.customSubEvents,
+                    layout: st.layout, lastTick: st.lastTick, awaitingZoneFor: st.awaitingZoneFor
                 };
                 localStorage.setItem(STATE_KEY, JSON.stringify(stateToSave));
             } catch(e) {}
@@ -1014,16 +1065,8 @@
                             keys.push(key);
                         }
                     }
-                    
                     keys.sort().reverse();
-                    
-                    for (let i = 0; i < keys.length; i++) {
-                        const val = localStorage.getItem(keys[i]);
-                        if (val) {
-                            saved = val;
-                            break;
-                        }
-                    }
+                    if (keys.length > 0) saved = localStorage.getItem(keys[0]);
                 }
                 
                 if (saved) {
@@ -1036,12 +1079,21 @@
                     st.zone = p.zone || 'Z4-Central'; st.isFlipped = p.isFlipped || false; st.areZonesHidden = p.areZonesHidden || false;
                     st.awaitingZoneFor = p.awaitingZoneFor || null;
                     
-                    if(p.layout && p.layout.modules && Object.keys(p.layout.modules).length > 0) {
+                    st.modules = p.modules || JSON.parse(JSON.stringify(DEFAULT_MODULES));
+                    st.customPhases = p.customPhases || [];
+                    st.customSubEvents = p.customSubEvents || {};
+                    
+                    st.availablePhases = p.availablePhases || {
+                        'GENERAL': [...BASE_GENERAL_PROPOSED],
+                        'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
+                        'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA],
+                        'ESTATICAS': [...BASE_MOD_EVENTS_PROPOSED.ESTATICAS],
+                        'JUEGO_PIE': [...BASE_MOD_EVENTS_PROPOSED.JUEGO_PIE]
+                    };
+
+                    if(p.layout && p.layout.modules) {
                         st.layout = p.layout;
                         if(!st.layout.colOrder) st.layout.colOrder = ['GENERAL', 'MODULO', 'SUBFASES'];
-                        
-                        if (!st.layout.modules['ATAQUE'].includes('Balón perdido')) st.layout.modules['ATAQUE'].push('Balón perdido');
-                        if (!st.layout.modules['DEFENSA'].includes('Balón recuperado')) st.layout.modules['DEFENSA'].push('Balón recuperado');
                     } else {
                         initDefaultLayout();
                     }
@@ -1067,13 +1119,10 @@
         }
         
         function initDefaultLayout() {
-            st.layout.modules = {
-                'GENERAL': BASE_GENERAL.filter(e => !e.startsWith('Comodín')),
-                'ATAQUE': MOD_EVENTS.ATAQUE.filter(e => !e.startsWith('Comodín')),
-                'DEFENSA': MOD_EVENTS.DEFENSA.filter(e => !e.startsWith('Comodín')),
-                'ESTATICAS': MOD_EVENTS.ESTATICAS.filter(e => !e.startsWith('Comodín')),
-                'JUEGO_PIE': MOD_EVENTS.JUEGO_PIE.filter(e => !e.startsWith('Comodín'))
-            };
+            st.layout.modules = {};
+            Object.keys(st.availablePhases).forEach(m => {
+                st.layout.modules[m] = [...st.availablePhases[m]];
+            });
             st.layout.colOrder = ['GENERAL', 'MODULO', 'SUBFASES'];
         }
 
@@ -1144,6 +1193,20 @@
             }
         }
 
+        function renderModulesGrid() {
+            const mg = document.getElementById('modulesGrid'); 
+            if (!mg) return;
+            mg.innerHTML = '';
+            Object.keys(st.modules).forEach(k => {
+                const m = st.modules[k]; 
+                const d = document.createElement('div');
+                d.className = `module-card ${k === st.mod ? 'selected' : ''}`;
+                d.innerHTML = `<div style="font-size:1.6rem; margin-bottom:4px;">${m.icon}</div><div style="font-weight:bold; font-size:0.85rem; color:var(--primary);">${m.name}</div><div style="font-size:0.65rem; color:#64748b; margin-top:4px;">${m.desc || ''}</div>`;
+                d.onclick = () => { document.querySelectorAll('.module-card').forEach(c => c.classList.remove('selected')); d.classList.add('selected'); setModule(k); saveState(); };
+                mg.appendChild(d);
+            });
+        }
+
         function initSetup() {
             document.title = "RuggerMatch - v" + APP_VERSION;
             if(document.getElementById('version-login')) document.getElementById('version-login').innerText = "v" + APP_VERSION;
@@ -1176,15 +1239,11 @@
             }
 
             const recovered = loadState();
-            const mg = document.getElementById('modulesGrid'); mg.innerHTML = '';
-            Object.keys(MODULES).forEach(k => {
-                const m = MODULES[k]; const d = document.createElement('div');
-                d.className = `module-card ${k === st.mod ? 'selected' : ''}`;
-                d.innerHTML = `<div style="font-size:1.6rem; margin-bottom:4px;">${m.icon}</div><div style="font-weight:bold; font-size:0.85rem; color:var(--primary);">${m.name}</div><div style="font-size:0.65rem; color:#64748b; margin-top:4px;">${m.desc}</div>`;
-                d.onclick = () => { document.querySelectorAll('.module-card').forEach(c => c.classList.remove('selected')); d.classList.add('selected'); setModule(k); saveState(); };
-                mg.appendChild(d);
-            });
-            initPitch(); applyColumnOrder(); updateLockState(); checkMicrophonePermission();
+            renderModulesGrid();
+            initPitch(); 
+            applyColumnOrder(); 
+            updateLockState(); 
+            checkMicrophonePermission();
             
             const savedUser = localStorage.getItem('ruggerUser');
             
@@ -1239,6 +1298,200 @@
             }
         };
 
+        // --- GESTIÓN DINÁMICA DE MÓDULOS, FASES Y SUBFASES ---
+        function toggleNewModulePanel() {
+            const panel = document.getElementById('new-module-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function addCustomModule() {
+            const name = document.getElementById('newModName').value.trim();
+            const icon = document.getElementById('newModIcon').value.trim() || '🏉';
+            const desc = document.getElementById('newModDesc').value.trim() || 'Módulo personalizado';
+            const color = document.getElementById('newModColor').value;
+
+            if (!name) { showAppAlert("Indica al menos el nombre del módulo."); return; }
+
+            const key = 'MOD_' + Date.now().toString(36).toUpperCase();
+            st.modules[key] = { icon, name, desc, color, isCustom: true };
+            st.availablePhases[key] = [];
+            st.layout.modules[key] = [];
+
+            document.getElementById('newModName').value = '';
+            document.getElementById('newModIcon').value = '';
+            document.getElementById('newModDesc').value = '';
+            toggleNewModulePanel();
+            
+            saveState();
+            renderModulesGrid();
+            openSettings();
+            showAppAlert(`Módulo '${name}' creado correctamente.`, "Éxito");
+        }
+
+        function deleteCustomModule(modKey) {
+            const modName = st.modules[modKey]?.name || modKey;
+            showAppConfirm(`¿Eliminar permanentemente el módulo '${modName}' y todas sus fases asociadas?`, () => {
+                delete st.modules[modKey];
+                delete st.availablePhases[modKey];
+                delete st.layout.modules[modKey];
+
+                if (st.mod === modKey) {
+                    st.mod = Object.keys(st.modules)[0] || 'ATAQUE';
+                }
+                saveState();
+                renderModulesGrid();
+                openSettings();
+            }, null, "Eliminar Módulo", "Eliminar", "Cancelar", true);
+        }
+
+        function addCustomPhase(mod) {
+            const inp = document.getElementById(`new_phase_input_${mod}`);
+            if (!inp) return;
+            const phaseName = inp.value.trim();
+            if (!phaseName) { showAppAlert("Escribe un nombre para la nueva fase."); return; }
+
+            // Comprobar si ya existe globalmente
+            const allPhases = Object.keys(st.availablePhases).flatMap(k => st.availablePhases[k]);
+            if (allPhases.includes(phaseName)) {
+                showAppAlert("Ya existe una fase con ese nombre.");
+                return;
+            }
+
+            if (!st.availablePhases[mod]) st.availablePhases[mod] = [];
+            st.availablePhases[mod].push(phaseName);
+
+            if (!st.customPhases) st.customPhases = [];
+            st.customPhases.push(phaseName);
+
+            if (!st.layout.modules[mod]) st.layout.modules[mod] = [];
+            st.layout.modules[mod].push(phaseName);
+
+            dict[phaseName] = phaseName;
+            localStorage.setItem('ruggerDict', JSON.stringify(dict));
+
+            inp.value = '';
+            saveState();
+            openSettings();
+        }
+
+        function deleteCustomPhase(mod, phaseName) {
+            showAppConfirm(`¿Eliminar la fase personalizada '${phaseName}'?`, () => {
+                if (st.availablePhases[mod]) {
+                    st.availablePhases[mod] = st.availablePhases[mod].filter(p => p !== phaseName);
+                }
+                if (st.layout.modules[mod]) {
+                    st.layout.modules[mod] = st.layout.modules[mod].filter(p => p !== phaseName);
+                }
+                if (st.customPhases) {
+                    st.customPhases = st.customPhases.filter(p => p !== phaseName);
+                }
+                delete dict[phaseName];
+                if (st.customSubEvents && st.customSubEvents[phaseName]) {
+                    delete st.customSubEvents[phaseName];
+                }
+                localStorage.setItem('ruggerDict', JSON.stringify(dict));
+                saveState();
+                openSettings();
+            }, null, "Eliminar Fase", "Eliminar", "Cancelar", true);
+        }
+
+        function addCustomSubPhase(parentEv, safeId) {
+            const inp = document.getElementById(`new_sub_input_${safeId}`);
+            if (!inp) return;
+            const subName = inp.value.trim();
+            if (!subName) { showAppAlert("Escribe un nombre para la subfase."); return; }
+
+            const currentSubs = getSubEventsFor(parentEv);
+            if (currentSubs.includes(subName)) {
+                showAppAlert("Ya existe esa subfase en esta fase.");
+                return;
+            }
+
+            if (!st.customSubEvents) st.customSubEvents = {};
+            if (!st.customSubEvents[parentEv]) st.customSubEvents[parentEv] = [];
+            st.customSubEvents[parentEv].push(subName);
+
+            const ck = `${parentEv}|${subName}`;
+            dict[ck] = subName;
+            localStorage.setItem('ruggerDict', JSON.stringify(dict));
+
+            inp.value = '';
+            saveState();
+            openSettings();
+        }
+
+        function deleteCustomSubPhase(parentEv, subName) {
+            showAppConfirm(`¿Eliminar la subfase '${subName}'?`, () => {
+                if (st.customSubEvents && st.customSubEvents[parentEv]) {
+                    st.customSubEvents[parentEv] = st.customSubEvents[parentEv].filter(s => s !== subName);
+                }
+                delete dict[`${parentEv}|${subName}`];
+                localStorage.setItem('ruggerDict', JSON.stringify(dict));
+                saveState();
+                openSettings();
+            }, null, "Eliminar Subfase", "Eliminar", "Cancelar", true);
+        }
+
+        // --- EXPORTAR E IMPORTAR CONFIGURACIÓN VISUAL ---
+        function exportLayoutConfig() {
+            const exportData = {
+                app: "RuggerMatch",
+                version: APP_VERSION,
+                date: new Date().toISOString(),
+                modules: st.modules,
+                availablePhases: st.availablePhases,
+                customPhases: st.customPhases || [],
+                customSubEvents: st.customSubEvents || {},
+                layout: st.layout,
+                dict: dict
+            };
+
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `RuggerMatch_Config_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importLayoutConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const cfg = JSON.parse(e.target.result);
+                    if (!cfg.modules || !cfg.layout) throw new Error("Estructura JSON incompatible.");
+
+                    st.modules = cfg.modules;
+                    st.availablePhases = cfg.availablePhases || st.availablePhases;
+                    st.customPhases = cfg.customPhases || [];
+                    st.customSubEvents = cfg.customSubEvents || {};
+                    st.layout = cfg.layout;
+                    if (cfg.dict) {
+                        dict = { ...defaultDict, ...cfg.dict };
+                        localStorage.setItem('ruggerDict', JSON.stringify(dict));
+                    }
+
+                    if (!st.modules[st.mod]) {
+                        st.mod = Object.keys(st.modules)[0] || 'ATAQUE';
+                    }
+
+                    saveState();
+                    renderModulesGrid();
+                    openSettings();
+                    renderColumns();
+                    showAppAlert("Configuración importada y aplicada exitosamente.", "Éxito");
+                } catch(err) {
+                    showAppAlert("Error importando archivo: " + err.message, "Fallo al importar");
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
         function openSettings() {
             const activeEvents = st.log.filter(e => e.status !== 'revoked by user');
             const isLocked = (st.time > 0 || activeEvents.length > 0 || st.session > 1) && !st.adminUnlocked;
@@ -1262,38 +1515,86 @@
             
             const genBlock = (ev, color, mod) => {
                 let isChecked = st.layout.modules[mod] && st.layout.modules[mod].includes(ev);
-                let visToggle = `<input type="checkbox" id="${getSafeId(mod, ev)}" class="visibility-toggle" data-ev="${ev}" data-mod="${mod}" onchange="handleVisChange(this, '${mod}', '${ev}')" ${isChecked ? 'checked' : ''} ${isLocked?'disabled':''} title="Mostrar en interfaz" style="margin-right: 4px; width: 16px; height: 16px; flex-shrink: 0; cursor: ${isLocked?'not-allowed':'pointer'};">`;
+                let safeId = getSafeId(mod, ev);
+                let isCustomPhase = st.customPhases && st.customPhases.includes(ev);
+
+                let deletePhaseBtn = isCustomPhase 
+                    ? `<button class="btn-delete-item" onclick="deleteCustomPhase('${mod}', '${ev}')" title="Eliminar fase personal">🗑️</button>` 
+                    : ``;
+
+                let visToggle = `<input type="checkbox" id="${safeId}" class="visibility-toggle" data-ev="${ev}" data-mod="${mod}" onchange="handleVisChange(this, '${mod}', '${ev}')" ${isChecked ? 'checked' : ''} ${isLocked?'disabled':''} title="Mostrar en interfaz" style="margin-right: 4px; width: 16px; height: 16px; flex-shrink: 0; cursor: ${isLocked?'not-allowed':'pointer'};">`;
 
                 let h = `<div style="margin-bottom:8px; width:100%;"><div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; background:#f1f5f9; padding:6px 8px; border-radius:4px; margin-bottom:4px; border-left:4px solid ${color};">
                     <div style="display:flex; align-items:center; flex:1; gap:6px; overflow:hidden;">
                         ${visToggle}
                         <span style="color:var(--primary); font-weight:bold; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.75rem;" title="${ev}">${ev}</span>
                         <input type="text" data-dict-key="${ev}" class="form-control dict-input" style="width:110px; flex-shrink:0; padding:4px; font-size:0.75rem; background:#fff; border:1px solid #cbd5e1; border-radius:4px;" value="${dict[ev] || ev}" ${isLocked?'disabled':''} placeholder="Renombrar...">
+                        ${deletePhaseBtn}
                     </div></div>`;
                 
-                if (SUB_EVENTS[ev]) {
-                    h += `<div style="padding-left:12px; border-left:2px dotted #cbd5e1; margin-left:10px;">`;
-                    SUB_EVENTS[ev].forEach(sub => {
-                        const ck = `${ev}|${sub}`;
-                        h += `<div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; margin-bottom:3px;"><span style="color:#64748b; max-width:140px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${sub}">↳ ${sub}</span><input type="text" data-dict-key="${ck}" class="form-control dict-input" style="width:110px; flex-shrink:0; padding:3px; font-size:0.7rem; background:#fff; border:1px solid #cbd5e1; border-radius:4px;" value="${dict[ck] || sub}" ${isLocked?'disabled':''}></div>`;
-                    });
-                    h += `</div>`;
-                }
-                return h + `</div>`;
+                const allSubs = getSubEventsFor(ev);
+                h += `<div style="padding-left:12px; border-left:2px dotted #cbd5e1; margin-left:10px;">`;
+                
+                allSubs.forEach(sub => {
+                    const ck = `${ev}|${sub}`;
+                    const isCustomSub = st.customSubEvents && st.customSubEvents[ev] && st.customSubEvents[ev].includes(sub);
+                    const delSubBtn = isCustomSub 
+                        ? `<button class="btn-delete-item" onclick="deleteCustomSubPhase('${ev}', '${sub}')" title="Eliminar subfase">🗑️</button>`
+                        : ``;
+
+                    h += `<div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; margin-bottom:3px;">
+                        <span style="color:#64748b; max-width:130px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${sub}">↳ ${sub}</span>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <input type="text" data-dict-key="${ck}" class="form-control dict-input" style="width:105px; flex-shrink:0; padding:3px; font-size:0.7rem; background:#fff; border:1px solid #cbd5e1; border-radius:4px;" value="${dict[ck] || sub}" ${isLocked?'disabled':''}>
+                            ${delSubBtn}
+                        </div>
+                    </div>`;
+                });
+
+                // Fila para añadir nueva subfase
+                h += `<div style="display:flex; gap:4px; margin-top:4px; margin-bottom:6px;">
+                    <input type="text" id="new_sub_input_${safeId}" class="form-control" placeholder="+ Nueva subfase..." style="padding:2px 6px; font-size:0.7rem; height:24px;" ${isLocked?'disabled':''}>
+                    <button class="btn-sm-action" style="padding:2px 6px; font-size:0.7rem; height:24px;" onclick="addCustomSubPhase('${ev}', '${safeId}')" ${isLocked?'disabled':''}>➕</button>
+                </div>`;
+
+                h += `</div></div>`;
+                return h;
             };
 
-            Object.keys(ALL_MODS_MASTER).forEach(mod => {
-                const title = mod === 'GENERAL' ? '1. General' : `Módulo: ${MODULES[mod].name}`;
-                const clr = mod === 'GENERAL' ? 'var(--secondary)' : MODULES[mod].color;
-                html += `<div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; flex-direction:column;"><h4 style="margin:0 0 12px 0; color:${clr};">${title}</h4>`;
+            const allModKeys = ['GENERAL', ...Object.keys(st.modules)];
+            allModKeys.forEach(mod => {
+                const isGen = mod === 'GENERAL';
+                const modObj = isGen ? { name: '1. General', color: 'var(--secondary)', icon: '📌', isCustom: false } : st.modules[mod];
+                if (!modObj) return;
+
+                const title = isGen ? '1. General' : `${modObj.icon} ${modObj.name}`;
+                const clr = modObj.color || 'var(--secondary)';
                 
-                ALL_MODS_MASTER[mod].forEach(ev => {
+                const deleteModBtn = modObj.isCustom 
+                    ? `<button class="btn-delete-item" onclick="deleteCustomModule('${mod}')" title="Eliminar módulo completo" style="font-size:1rem;">🗑️</button>` 
+                    : ``;
+
+                html += `<div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; flex-direction:column;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
+                        <h4 style="margin:0; color:${clr};">${title}</h4>
+                        ${deleteModBtn}
+                    </div>`;
+                
+                // Formulario para añadir nueva fase a este módulo
+                html += `<div style="display:flex; gap:4px; margin-bottom:10px;">
+                    <input type="text" id="new_phase_input_${mod}" class="form-control" placeholder="+ Nueva fase para ${isGen?'General':modObj.name}..." style="font-size:0.75rem; padding:4px 8px;" ${isLocked?'disabled':''}>
+                    <button class="btn-sm-action" style="background:${clr}; color:white;" onclick="addCustomPhase('${mod}')" ${isLocked?'disabled':''}>Añadir</button>
+                </div>`;
+
+                const modPhases = st.availablePhases[mod] || [];
+                modPhases.forEach(ev => {
                     html += genBlock(ev, clr, mod);
                 }); 
                 html += `</div>`;
             });
             
-            df.innerHTML = html; document.getElementById('modal-settings').classList.add('active');
+            df.innerHTML = html; 
+            document.getElementById('modal-settings').classList.add('active');
         }
 
         function closeSettings() {
@@ -1302,10 +1603,14 @@
         }
 
         function saveSettings() {
-            document.querySelectorAll('.dict-input').forEach(inp => dict[inp.getAttribute('data-dict-key')] = inp.value.trim() || inp.getAttribute('data-dict-key').split('|').pop());
+            document.querySelectorAll('.dict-input').forEach(inp => {
+                const k = inp.getAttribute('data-dict-key');
+                if (k) dict[k] = inp.value.trim() || k.split('|').pop();
+            });
             localStorage.setItem('ruggerDict', JSON.stringify(dict)); 
             
-            Object.keys(ALL_MODS_MASTER).forEach(mod => {
+            const allModKeys = ['GENERAL', ...Object.keys(st.modules)];
+            allModKeys.forEach(mod => {
                 let currentOrder = st.layout.modules[mod] || [];
                 let checkedEvents = [];
                 document.querySelectorAll(`.visibility-toggle[data-mod="${mod}"]`).forEach(chk => {
@@ -1317,7 +1622,9 @@
                 st.layout.modules[mod] = newOrder;
             });
 
-            closeSettings(); saveState(); renderColumns();
+            closeSettings(); 
+            saveState(); 
+            renderColumns();
         }
         
         function dTranslate(k) { return dict[k] || k.split('|').pop(); }
@@ -1355,9 +1662,10 @@
                 document.getElementById('btnTeamV').classList.remove('selected');
             }
 
+            const modObj = st.modules[st.mod] || DEFAULT_MODULES.ATAQUE;
             const mb = document.getElementById('moduleBadge');
-            mb.innerText = `${MODULES[st.mod].icon} MÓDULO ${MODULES[st.mod].name.toUpperCase()}`;
-            mb.style.backgroundColor = MODULES[st.mod].color;
+            mb.innerText = `${modObj.icon} MÓDULO ${modObj.name.toUpperCase()}`;
+            mb.style.backgroundColor = modObj.color;
 
             applyColumnOrder(); renderColumns(); updateTime(); updateStatsUI(); updateLogUI(); initPitch(); updateLockState();
             
@@ -1454,9 +1762,9 @@
             if (btnV) btnV.classList.toggle('selected', t === 'Visitante'); 
 
             if (t) {
-                if (t === st.myTeam) {
+                if (t === st.myTeam && st.modules['ATAQUE']) {
                     setModule('ATAQUE');
-                } else {
+                } else if (st.modules['DEFENSA']) {
                     setModule('DEFENSA');
                 }
             }
@@ -1540,13 +1848,19 @@
                 c1.appendChild(b);
             });
 
-            document.getElementById('col2Header').innerText = `2. Módulo ${MODULES[st.mod].name.toUpperCase()}`;
+            const currentModObj = st.modules[st.mod] || { name: st.mod, color: '#3b82f6', icon: '🏉' };
+            const col2H = document.getElementById('col2Header');
+            col2H.innerText = `2. ${currentModObj.name.toUpperCase()}`;
+            col2H.style.color = currentModObj.color;
+
             const c2 = document.getElementById('col2-content'); c2.innerHTML = '';
             const mEvents = st.layout.modules[st.mod] || [];
             mEvents.forEach((e, idx) => {
                 const b = document.createElement('button'); b.className = 'evt-btn'; b.innerText = dTranslate(e);
                 b.setAttribute('data-ev', e);
-                b.style.backgroundColor = MODULES[st.mod].color + '11'; b.style.borderColor = MODULES[st.mod].color + '55'; b.style.color = MODULES[st.mod].color;
+                b.style.backgroundColor = currentModObj.color + '11'; 
+                b.style.borderColor = currentModObj.color + '55'; 
+                b.style.color = currentModObj.color;
                 if (st.editMode) {
                     if (st.moveSource && st.moveSource.colKey === st.mod && st.moveSource.idx === idx) b.classList.add('move-source');
                     b.onclick = () => handleMoveClick(st.mod, idx);
@@ -1685,7 +1999,7 @@
                 else btn.classList.remove('active-phase');
             });
 
-            const subs = SUB_EVENTS[ev]; 
+            const subs = getSubEventsFor(ev);
             const c3 = document.getElementById('col3-content'); c3.innerHTML = '';
             
             if(subs && subs.length > 0) {
