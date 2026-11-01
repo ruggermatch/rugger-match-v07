@@ -77,7 +77,6 @@
         .btn-undo-mini, .btn-redo-mini { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; padding: 2px 5px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.65rem; display: flex; align-items: center; gap: 2px; }
         .btn-redo-mini { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
 
-        /* Ajuste de altura a 32vh para garantizar visibilidad total del panel de control */
         .middle-section { display: flex; flex-shrink: 0; height: 32vh; max-height: 33vh; min-height: 180px; gap: 8px; margin: 4px 0; }
         
         .pitch-container { flex: 2.5; display: flex; flex-direction: column; background: #000; border: 2px solid #000; border-radius: 6px; overflow: hidden;}
@@ -139,7 +138,63 @@
         .goalpost .post.bottom { bottom: 0; }
         .goalpost .crossbar { position: absolute; width: 3px; height: 100%; background: #fef08a; left: 45%; border-right: 1px solid #b45309; }
 
-        .attack-direction { height: 18px; background: #e2e8f0; color: #475569; font-size: 0.62rem; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; text-transform: uppercase; border-top: 1px solid #cbd5e1; user-select: none;}
+        /* Barra de control inferior del terreno: combina posesiones y sentido de ataque */
+        .pitch-control-bar {
+            display: flex;
+            align-items: stretch;
+            height: 30px;
+            background: #0f172a;
+            border-top: 1px solid #334155;
+            padding: 2px 4px;
+            gap: 4px;
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .pitch-control-bar .team-btn {
+            flex: 1.2;
+            height: 100%;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .team-btn-local { background: var(--bg-local); color: var(--primary); border-color: var(--border-local); }
+        .team-btn-local.selected { background: var(--border-local); color: white; }
+        .team-btn-visitor { background: var(--bg-visitor); color: var(--primary); border-color: var(--border-visitor); }
+        .team-btn-visitor.selected { background: var(--border-visitor); color: white; }
+
+        .pitch-control-bar .btn-flip-direction {
+            flex: 1.6;
+            height: 100%;
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .pitch-control-bar .btn-flip-direction:hover {
+            background: #334155;
+            color: #ffffff;
+        }
+        .pitch-control-bar .btn-flip-direction:active {
+            transform: scale(0.98);
+        }
 
         .log-panel { flex: 1.2; background: white; border-radius: 6px; padding: 6px; border: 1px solid #cbd5e1; display: flex; flex-direction: column; overflow: hidden; }
         .log-title { font-size: 0.72rem; font-weight: bold; border-bottom: 2px solid #e2e8f0; padding-bottom: 3px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; color: var(--primary); }
@@ -156,17 +211,9 @@
         .stats-table td { padding: 1px 0; font-variant-numeric: tabular-nums;}
 
         .bottom-panel { background: white; padding: 6px 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow: hidden; }
-        .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; height: 32px; flex-shrink: 0; }
-        .team-btn { font-size: 0.85rem; font-weight: bold; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.2s;}
-        .team-btn-local { background: var(--bg-local); color: var(--primary); border-color: var(--border-local); }
-        .team-btn-local.selected { background: var(--border-local); color: white; }
-        .team-btn-visitor { background: var(--bg-visitor); color: var(--primary); border-color: var(--border-visitor); }
-        .team-btn-visitor.selected { background: var(--border-visitor); color: white; }
-
-        .columns-3-container { flex: 1; display: flex; gap: 6px; min-height: 0; overflow: hidden; }
-        .column { display: flex; flex-direction: column; gap: 4px; background: #f8fafc; padding: 4px 6px; border-radius: 6px; border: 1px solid #cbd5e1; overflow-y: auto; min-height: 0; }
+        .columns-3-container { flex: 1; display: flex; gap: 6px; min-height: 0; height: 100%; overflow: hidden; }
+        .column { display: flex; flex-direction: column; gap: 4px; background: #f8fafc; padding: 4px 6px; border-radius: 6px; border: 1px solid #cbd5e1; overflow-y: auto; min-height: 0; height: 100%; }
         
-        /* Proporciones optimizadas para cuadrículas de 5 y 4 columnas */
         #col1 { flex: 3.4; position: relative; }
         #col2 { flex: 2.7; }
         #col3 { flex: 2.1; }
@@ -176,15 +223,35 @@
         .col-move-btn { background: #e2e8f0; border: none; font-size: 0.7rem; cursor: pointer; padding: 1px 5px; border-radius: 3px; display: none; }
         body.is-editing .col-move-btn { display: block; }
         
-        .col-content { display: grid; gap: 4px; flex: 1; align-content: stretch; min-height: 0; }
+        /* Contenedor de botones ocupa 100% de la caja */
+        .col-content { 
+            display: grid; 
+            gap: 4px; 
+            flex: 1; 
+            min-height: 0; 
+            height: 100%; 
+            align-content: stretch; 
+        }
         
-        /* Botones optimizados contra desbordamiento */
+        /* Botones ocupan todo el espacio disponible en su celda */
         .col-content .evt-btn { 
-            width: 100%; height: 100%; min-height: 32px; max-height: 52px; 
-            font-size: 0.67rem; font-weight: 600; line-height: 1.15;
-            border-radius: 4px; background: white; border: 1px solid #cbd5e1; 
-            cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            text-align: center; user-select: none; padding: 2px 3px; word-break: break-word;
+            width: 100%; 
+            height: 100%; 
+            min-height: 0; 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            line-height: 1.15;
+            border-radius: 4px; 
+            background: white; 
+            border: 1px solid #cbd5e1; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            user-select: none; 
+            padding: 2px 4px; 
+            word-break: break-word;
         }
         .col-content .evt-btn:active { transform: scale(0.96); background: #e2e8f0; }
         
@@ -216,7 +283,7 @@
         .modal-overlay.active { display: flex; }
         .modal-content { background: white; padding: 18px; border-radius: 10px; width: 95vw; max-width: 1250px; max-height: 92vh; display: flex; flex-direction: column;}
         
-        #dictForm { flex:1; overflow-y:auto; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 15px; align-items: start; align-content: start;}
+        #dictForm { flex:1; overflow-y:auto; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 12px; align-items: start; align-content: start;}
         
         /* Paneles de configuración flotantes contextuales en Col 1 */
         #touch-popup, #penalty-popup {
@@ -299,6 +366,23 @@
         </div>
     </div>
 
+    <!-- Pop up de advertencia de resolución/scroll en cajas de botones -->
+    <div id="modal-scroll-warning" class="modal-overlay" style="z-index: 2500;">
+        <div class="modal-content" style="max-width: 440px; text-align: center;">
+            <h3 style="margin-top:0; color:var(--warning);">⚠️ Pantalla no óptima</h3>
+            <p style="font-size:0.9rem; color:#475569; margin-bottom: 16px; line-height: 1.4;">
+                El espacio de pantalla actual requiere desplazamiento (scroll) para acceder a todos los botones.<br><br>
+                Para registrar el partido con total fluidez, maximiza la pantalla (🔲), ajusta el zoom del navegador (Ctrl -) o utiliza un dispositivo con mayor resolución en formato horizontal.
+            </p>
+            <div style="display:flex; justify-content:center; gap:10px;">
+                <button class="btn-primary" style="max-width:180px;" onclick="dismissScrollWarning()">Entendido</button>
+            </div>
+            <label style="font-size:0.75rem; color:#64748b; margin-top:12px; display:inline-block; cursor:pointer;">
+                <input type="checkbox" id="chkDoNotShowScrollWarn" style="vertical-align:middle; margin-right:4px;"> No volver a avisar en esta sesión
+            </label>
+        </div>
+    </div>
+
     <div id="modal-confirm" class="modal-overlay" style="z-index: 2000;">
         <div class="modal-content" style="max-width: 450px; text-align: center;">
             <h3 id="confirm-title" style="margin-top:0; color:var(--primary);">Confirmación</h3>
@@ -370,7 +454,7 @@
         </div>
     </div>
 
-    <!-- Modal de configuración avanzada, diccionario, módulos y fases -->
+    <!-- Modal de organización de módulos y diccionario avanzado -->
     <div id="modal-settings" class="modal-overlay">
         <div class="modal-content">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px; flex-shrink: 0; flex-wrap:wrap; gap:8px;">
@@ -418,6 +502,7 @@
                     <button class="btn-reset" onclick="resetMatch()">Reset</button>
                 </div>
             </div>
+            <!-- Eliminada la palabra "MÓDULO" -->
             <div class="module-badge" id="moduleBadge">ATAQUE</div>
             <div class="score-section">
                 <div style="display:flex; align-items:center; gap:6px;"><span id="scoreLblL">LOC</span> <input type="number" id="scoreL" class="score-input" value="0" min="0" onchange="saveState()"></div>
@@ -466,7 +551,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="attack-direction" onclick="togglePitchFlip()" id="btnFlipPitch">SENTIDO DE ATAQUE ➡️🔄</div>
+
+                <!-- Barra inferior del terreno: integra posesión y sentido de ataque sincronizados -->
+                <div class="pitch-control-bar" id="pitchControlBar">
+                    <button class="team-btn team-btn-local" id="btnTeamL" onclick="selectTeam('Local')">Posesión: LOC</button>
+                    <button class="btn-flip-direction" id="btnFlipPitch" onclick="togglePitchFlip()">SENTIDO DE ATAQUE ➡️ 🔄</button>
+                    <button class="team-btn team-btn-visitor" id="btnTeamV" onclick="selectTeam('Visitante')">Posesión: VIS</button>
+                </div>
             </div>
 
             <div class="log-panel">
@@ -506,10 +597,6 @@
         </div>
 
         <div class="bottom-panel">
-            <div class="teams-grid">
-                <button class="team-btn team-btn-local" id="btnTeamL" onclick="selectTeam('Local')">Posesión: Local</button>
-                <button class="team-btn team-btn-visitor" id="btnTeamV" onclick="selectTeam('Visitante')">Posesión: Visitante</button>
-            </div>
             <div class="columns-3-container">
                 <div class="column" id="col1">
                     <div class="col-header-wrap">
@@ -588,7 +675,6 @@
                         <div class="col-header" style="color:var(--warning)">3. Subfases</div>
                         <button class="col-move-btn" onclick="moveColumn('SUBFASES', 'right')">▶</button>
                     </div>
-                    <!-- Distribución en 2 columnas para eliminar desbordamiento vertical -->
                     <div id="col3-content" class="col-content"><div class="subfase-placeholder">Esperando fase...</div></div>
                 </div>
             </div>
@@ -605,7 +691,7 @@
     </div>
 
     <script>
-        const APP_VERSION = "0.7.1.3";
+        const APP_VERSION = "0.7.1.3.1";
 
         window.addEventListener('error', function(e) {
             const sb = document.getElementById('statusBar');
@@ -828,19 +914,16 @@
             }
         }
 
-        // Definiciones maestras y matrices de Fases.xlsx
         const DEFAULT_MODULES = {
             ATAQUE: { icon: '⚔️', name: 'Ataque', desc: 'Continuidad, ventaja, juego dinámico.', color: '#8b5cf6', isCustom: false },
             DEFENSA: { icon: '🛡️', name: 'Defensa', desc: 'Placajes, recuperación, presión.', color: '#0284c7', isCustom: false }
         };
 
-        // Matriz 5 columnas x 2 filas (A1 a E2)
         const BASE_GENERAL_PROPOSED = [
             "Touch a favor", "Melée a favor", "Golpe castigo a favor", "Golpe franco a favor", "Reinicio a favor",
             "Touch en contra", "Melée en contra", "Golpe castigo en contra", "Golpe franco en contra", "Reinicio en contra"
         ];
         
-        // Matriz 4 columnas x 3 filas (A1 a D3)
         const BASE_MOD_EVENTS_PROPOSED = {
             ATAQUE: [
                 "Línea de ventaja ganada Placaje+ruck", "Ruptura línea ventaja", "Patada", "Pick and go",
@@ -865,10 +948,7 @@
                 "Perdida por amago de lanzamiento", 
                 "Rápida"
             ],
-            "Touch en contra": [
-                "Recuperada", 
-                "Perdida"
-            ],
+            "Touch en contra": ["Recuperada", "Perdida"],
             "Melée a favor": [
                 "Ganada con presión", 
                 "Ganada 1 pase calidad (8>9)", 
@@ -879,83 +959,20 @@
                 "Golpe de castigo a favor", 
                 "Golpe de castigo en contra"
             ],
-            "Melée en contra": [
-                "Recuperada", 
-                "Perdida", 
-                "Golpe de castigo a favor", 
-                "Golpe de castigo en contra"
-            ],
-            "Golpe castigo a favor": [
-                "A palos convertido", 
-                "A palos fallado", 
-                "A touch", 
-                "Juego abierto"
-            ],
-            "Golpe castigo en contra": [
-                "A palos convertido", 
-                "A palos fallado", 
-                "A touch", 
-                "Juego abierto"
-            ],
-            "Reinicio a favor": [
-                "Ganado limpio en juego aéreo", 
-                "Ganado con presión", 
-                "Avant"
-            ],
-            "Reinicio en contra": [
-                "Ganado limpio en juego aéreo", 
-                "Ganado con presión", 
-                "Avant"
-            ],
-            "Línea de ventaja ganada Placaje+ruck": [
-                "Liberación rápida (< 3seg)", 
-                "Liberación lenta (> 3seg)"
-            ],
-            "Línea de ventaja perdida Placaje+ruck": [
-                "Liberación rápida (< 3seg)", 
-                "Liberación lenta (> 3seg)"
-            ],
-            "Ensayo": [
-                "Delantera", 
-                "3/4", 
-                "Rotura de línea", 
-                "Maul", 
-                "Ensayo de castigo"
-            ],
-            "Conversión": [
-                "Acierto", 
-                "Fallo"
-            ],
-            "Drop": [
-                "Acierto", 
-                "Fallo"
-            ],
-            "Balón perdido": [
-                "Avant", 
-                "Pescador", 
-                "Contra ruck", 
-                "Intercepción", 
-                "Chute perdido", 
-                "Maul injugable"
-            ],
-            "Placaje en contra": [
-                "Positivo", 
-                "Neutro", 
-                "Negativo"
-            ],
-            "Placaje a favor": [
-                "Positivo", 
-                "Neutro", 
-                "Negativo"
-            ],
-            "Balón recuperado": [
-                "Avant", 
-                "Pescador", 
-                "Contra ruck", 
-                "Intercepción", 
-                "Chute perdido", 
-                "Maul injugable"
-            ]
+            "Melée en contra": ["Recuperada", "Perdida", "Golpe de castigo a favor", "Golpe de castigo en contra"],
+            "Golpe castigo a favor": ["A palos convertido", "A palos fallado", "A touch", "Juego abierto"],
+            "Golpe castigo en contra": ["A palos convertido", "A palos fallado", "A touch", "Juego abierto"],
+            "Reinicio a favor": ["Ganado limpio en juego aéreo", "Ganado con presión", "Avant"],
+            "Reinicio en contra": ["Ganado limpio en juego aéreo", "Ganado con presión", "Avant"],
+            "Línea de ventaja ganada Placaje+ruck": ["Liberación rápida (< 3seg)", "Liberación lenta (> 3seg)"],
+            "Línea de ventaja perdida Placaje+ruck": ["Liberación rápida (< 3seg)", "Liberación lenta (> 3seg)"],
+            "Ensayo": ["Delantera", "3/4", "Rotura de línea", "Maul", "Ensayo de castigo"],
+            "Conversión": ["Acierto", "Fallo"],
+            "Drop": ["Acierto", "Fallo"],
+            "Balón perdido": ["Avant", "Pescador", "Contra ruck", "Intercepción", "Chute perdido", "Maul injugable"],
+            "Placaje en contra": ["Positivo", "Neutro", "Negativo"],
+            "Placaje a favor": ["Positivo", "Neutro", "Negativo"],
+            "Balón recuperado": ["Avant", "Pescador", "Contra ruck", "Intercepción", "Chute perdido", "Maul injugable"]
         };
 
         const RULES = {
@@ -963,12 +980,10 @@
             "Touch a favor|Perdida salto a destiempo": { poss: true },
             "Touch a favor|Perdida descoordinación lanzador-saltador": { poss: true },
             "Touch a favor|Perdida por amago de lanzamiento": { poss: true, note: "Golpe franco en contra" },
-            
             "Touch en contra|Recuperada": { poss: true },
             
             "Melée a favor|Perdida": { poss: true },
             "Melée a favor|Golpe de castigo en contra": { poss: true },
-            
             "Melée en contra|Recuperada": { poss: true },
             "Melée en contra|Golpe de castigo a favor": { poss: true },
             
@@ -981,7 +996,6 @@
             
             "Reinicio a favor|Avant": { poss: true, note: "Melée en contra" },
             "Reinicio en contra|Avant": { poss: true, note: "Melée a favor" },
-            
             "Golpe franco en contra|": { poss: true },
             
             "Ensayo|Delantera": { pts: 5 },
@@ -1011,10 +1025,17 @@
             "Balón recuperado|Maul injugable": { poss: true }
         };
 
+        const DEFAULT_TOUCH_FORMATIONS = ['2-2-2', '2-3-2', '1-4-1'];
+        const DEFAULT_TOUCH_POSITIONS = ['1', '2', '3', '4', '5'];
+        const DEFAULT_PENALTY_REASONS = [
+            'Placaje ilegal', 'Ruck', 'Fuera de juego', 'Protestar', 'Melée',
+            'Touch', 'En punto de encuentro por tirarse', 'En punto de encuentro por retenido', 'En punto de encuentro por pescar'
+        ];
+
         const defaultDict = {
-            '__touchFormations': '2-2-2, 2-3-2, 1-4-1',
-            '__touchPositions': '1, 2, 3, 4, 5',
-            '__penaltyReasons': 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar'
+            '__touchFormations': DEFAULT_TOUCH_FORMATIONS.join(', '),
+            '__touchPositions': DEFAULT_TOUCH_POSITIONS.join(', '),
+            '__penaltyReasons': DEFAULT_PENALTY_REASONS.join(', ')
         };
         BASE_GENERAL_PROPOSED.forEach(e => defaultDict[e] = e);
         Object.keys(BASE_MOD_EVENTS_PROPOSED).forEach(k => BASE_MOD_EVENTS_PROPOSED[k].forEach(e => defaultDict[e] = e));
@@ -1023,7 +1044,7 @@
         let dict = {...defaultDict};
         try { const stored = localStorage.getItem('ruggerDict'); if(stored) dict = {...defaultDict, ...JSON.parse(stored)}; } catch(e) {}
 
-        const STATE_KEY = 'ruggerMatch_v0713_state';
+        const STATE_KEY = 'ruggerMatch_v07131_state';
         
         let st = { 
             matchId: null,
@@ -1038,6 +1059,9 @@
                 'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
                 'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA]
             },
+            touchFormations: [...DEFAULT_TOUCH_FORMATIONS],
+            touchPositions: [...DEFAULT_TOUCH_POSITIONS],
+            penaltyReasons: [...DEFAULT_PENALTY_REASONS],
             customPhases: [],
             customSubEvents: {},
             layout: { 
@@ -1051,6 +1075,37 @@
             editMode: false, moveSource: null, adminUnlocked: false, wasRunningBeforeAdmin: false,
             lastTick: 0 
         };
+
+        let scrollWarningSuppressed = (sessionStorage.getItem('ruggerScrollWarnSuppressed') === 'true');
+
+        function checkButtonBoxesOverflow() {
+            if (scrollWarningSuppressed) return;
+            const tracker = document.getElementById('screen-tracker');
+            if (!tracker || !tracker.classList.contains('active')) return;
+
+            const ids = ['col1', 'col2', 'col3'];
+            let overflowFound = false;
+            for (const id of ids) {
+                const el = document.getElementById(id);
+                if (el && (el.scrollHeight - el.clientHeight > 6)) {
+                    overflowFound = true;
+                    break;
+                }
+            }
+
+            if (overflowFound) {
+                document.getElementById('modal-scroll-warning').classList.add('active');
+            }
+        }
+
+        function dismissScrollWarning() {
+            const chk = document.getElementById('chkDoNotShowScrollWarn');
+            if (chk && chk.checked) {
+                scrollWarningSuppressed = true;
+                sessionStorage.setItem('ruggerScrollWarnSuppressed', 'true');
+            }
+            document.getElementById('modal-scroll-warning').classList.remove('active');
+        }
 
         function getSubEventsFor(ev) {
             const baseSubs = BASE_SUB_EVENTS_PROPOSED[ev] || [];
@@ -1076,7 +1131,8 @@
             const modObj = st.modules[st.mod];
             const mb = document.getElementById('moduleBadge');
             if (mb && modObj) {
-                mb.innerText = `${modObj.icon} MÓDULO ${modObj.name.toUpperCase()}`;
+                // Se elimina la palabra "MÓDULO"
+                mb.innerText = `${modObj.icon} ${modObj.name.toUpperCase()}`;
                 mb.style.backgroundColor = modObj.color;
             }
             
@@ -1168,6 +1224,7 @@
                     session: st.session, teams: st.teams, stats: st.stats, zone: st.zone, myTeam: st.myTeam,
                     isFlipped: st.isFlipped, areZonesHidden: st.areZonesHidden, sL: sL, sV: sV,
                     modules: st.modules, availablePhases: st.availablePhases,
+                    touchFormations: st.touchFormations, touchPositions: st.touchPositions, penaltyReasons: st.penaltyReasons,
                     customPhases: st.customPhases, customSubEvents: st.customSubEvents,
                     layout: st.layout, lastTick: st.lastTick, awaitingZoneFor: st.awaitingZoneFor
                 };
@@ -1205,6 +1262,18 @@
                     st.customPhases = p.customPhases || [];
                     st.customSubEvents = p.customSubEvents || {};
                     
+                    if (p.touchFormations && Array.isArray(p.touchFormations)) st.touchFormations = p.touchFormations;
+                    else if (dict['__touchFormations']) st.touchFormations = dict['__touchFormations'].split(',').map(s=>s.trim()).filter(Boolean);
+                    else st.touchFormations = [...DEFAULT_TOUCH_FORMATIONS];
+
+                    if (p.touchPositions && Array.isArray(p.touchPositions)) st.touchPositions = p.touchPositions;
+                    else if (dict['__touchPositions']) st.touchPositions = dict['__touchPositions'].split(',').map(s=>s.trim()).filter(Boolean);
+                    else st.touchPositions = [...DEFAULT_TOUCH_POSITIONS];
+
+                    if (p.penaltyReasons && Array.isArray(p.penaltyReasons)) st.penaltyReasons = p.penaltyReasons;
+                    else if (dict['__penaltyReasons']) st.penaltyReasons = dict['__penaltyReasons'].split(',').map(s=>s.trim()).filter(Boolean);
+                    else st.penaltyReasons = [...DEFAULT_PENALTY_REASONS];
+
                     const hasNewPhases = p.availablePhases && p.availablePhases['GENERAL'] && p.availablePhases['GENERAL'].includes('Reinicio a favor');
                     if (hasNewPhases) {
                         st.availablePhases = p.availablePhases;
@@ -1233,7 +1302,6 @@
                     document.getElementById('scoreL').value = p.sL || 0; document.getElementById('scoreV').value = p.sV || 0;
                     document.getElementById('periodToggle').innerText = st.period; document.getElementById('sessionDisplay').innerText = `#${st.session}`;
                     if (st.areZonesHidden) document.body.classList.add('hide-zone-labels');
-                    document.getElementById('btnFlipPitch').innerText = st.isFlipped ? "⬅️ SENTIDO DE ATAQUE" : "SENTIDO DE ATAQUE ➡️";
                     
                     st.running = false; st.adminUnlocked = false; st.wasRunningBeforeAdmin = false;
                     return true;
@@ -1337,6 +1405,42 @@
             });
         }
 
+        function updatePitchBar() {
+            const btnL = document.getElementById('btnTeamL');
+            const btnV = document.getElementById('btnTeamV');
+            const btnFlip = document.getElementById('btnFlipPitch');
+            const sL = (st.teams.Local && st.teams.Local.s) ? st.teams.Local.s : 'LOC';
+            const sV = (st.teams.Visitante && st.teams.Visitante.s) ? st.teams.Visitante.s : 'VIS';
+
+            if (btnL) {
+                btnL.innerText = `Posesión: ${sL}`;
+                btnL.classList.toggle('selected', st.team === 'Local');
+            }
+            if (btnV) {
+                btnV.innerText = `Posesión: ${sV}`;
+                btnV.classList.toggle('selected', st.team === 'Visitante');
+            }
+
+            if (btnFlip) {
+                btnFlip.innerText = st.isFlipped ? "⬅️ SENTIDO DE ATAQUE 🔄" : "SENTIDO DE ATAQUE ➡️ 🔄";
+            }
+
+            // Coherencia con la realidad:
+            // Si Local ataca a la derecha (!st.isFlipped) -> Local a la izquierda, Visitante a la derecha
+            // Si Local ataca a la izquierda (st.isFlipped) -> Visitante a la izquierda, Local a la derecha
+            if (btnL && btnV && btnFlip) {
+                if (!st.isFlipped) {
+                    btnL.style.order = '1';
+                    btnFlip.style.order = '2';
+                    btnV.style.order = '3';
+                } else {
+                    btnV.style.order = '1';
+                    btnFlip.style.order = '2';
+                    btnL.style.order = '3';
+                }
+            }
+        }
+
         function initSetup() {
             document.title = "RuggerMatch - v" + APP_VERSION;
             if(document.getElementById('version-login')) document.getElementById('version-login').innerText = "v" + APP_VERSION;
@@ -1372,6 +1476,7 @@
             renderModulesGrid();
             initPitch(); 
             applyColumnOrder(); 
+            updatePitchBar();
             updateLockState(); 
             checkMicrophonePermission();
             
@@ -1395,6 +1500,10 @@
                     document.getElementById('screen-login').style.display = 'flex'; 
                 }
             }
+
+            window.addEventListener('resize', () => {
+                setTimeout(checkButtonBoxesOverflow, 150);
+            });
         }
 
         function recoverSession() { 
@@ -1428,7 +1537,6 @@
             }
         };
 
-        // --- GESTIÓN DINÁMICA DE MÓDULOS, FASES Y SUBFASES ---
         function toggleNewModulePanel() {
             const panel = document.getElementById('new-module-panel');
             panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
@@ -1561,7 +1669,64 @@
             }, null, "Eliminar Subfase", "Eliminar", "Cancelar", true);
         }
 
-        // --- EXPORTAR E IMPORTAR CONFIGURACIÓN VISUAL ---
+        // --- GESTIÓN DE TOUCH Y GOLPE DE CASTIGO POR CAJA DE TEXTO ---
+        function addTouchFormation() {
+            const inp = document.getElementById('newTouchFormInp');
+            if (!inp) return;
+            const v = inp.value.trim();
+            if (!v) return;
+            if (!st.touchFormations) st.touchFormations = [];
+            st.touchFormations.push(v);
+            inp.value = '';
+            saveState();
+            openSettings();
+        }
+
+        function deleteTouchFormation(idx) {
+            if (!st.touchFormations) return;
+            st.touchFormations.splice(idx, 1);
+            saveState();
+            openSettings();
+        }
+
+        function addTouchPosition() {
+            const inp = document.getElementById('newTouchPosInp');
+            if (!inp) return;
+            const v = inp.value.trim();
+            if (!v) return;
+            if (!st.touchPositions) st.touchPositions = [];
+            st.touchPositions.push(v);
+            inp.value = '';
+            saveState();
+            openSettings();
+        }
+
+        function deleteTouchPosition(idx) {
+            if (!st.touchPositions) return;
+            st.touchPositions.splice(idx, 1);
+            saveState();
+            openSettings();
+        }
+
+        function addPenaltyReason() {
+            const inp = document.getElementById('newPenaltyReasonInp');
+            if (!inp) return;
+            const v = inp.value.trim();
+            if (!v) return;
+            if (!st.penaltyReasons) st.penaltyReasons = [];
+            st.penaltyReasons.push(v);
+            inp.value = '';
+            saveState();
+            openSettings();
+        }
+
+        function deletePenaltyReason(idx) {
+            if (!st.penaltyReasons) return;
+            st.penaltyReasons.splice(idx, 1);
+            saveState();
+            openSettings();
+        }
+
         function exportLayoutConfig() {
             const exportData = {
                 app: "RuggerMatch",
@@ -1569,6 +1734,9 @@
                 date: new Date().toISOString(),
                 modules: st.modules,
                 availablePhases: st.availablePhases,
+                touchFormations: st.touchFormations,
+                touchPositions: st.touchPositions,
+                penaltyReasons: st.penaltyReasons,
                 customPhases: st.customPhases || [],
                 customSubEvents: st.customSubEvents || {},
                 layout: st.layout,
@@ -1596,6 +1764,9 @@
 
                     st.modules = cfg.modules;
                     st.availablePhases = cfg.availablePhases || st.availablePhases;
+                    if (cfg.touchFormations && Array.isArray(cfg.touchFormations)) st.touchFormations = cfg.touchFormations;
+                    if (cfg.touchPositions && Array.isArray(cfg.touchPositions)) st.touchPositions = cfg.touchPositions;
+                    if (cfg.penaltyReasons && Array.isArray(cfg.penaltyReasons)) st.penaltyReasons = cfg.penaltyReasons;
                     st.customPhases = cfg.customPhases || [];
                     st.customSubEvents = cfg.customSubEvents || {};
                     st.layout = cfg.layout;
@@ -1612,6 +1783,7 @@
                     renderModulesGrid();
                     openSettings();
                     renderColumns();
+                    updatePitchBar();
                     showAppAlert("Configuración importada y aplicada exitosamente.", "Éxito");
                 } catch(err) {
                     showAppAlert("Error importando archivo: " + err.message, "Fallo al importar");
@@ -1628,21 +1800,73 @@
             
             const df = document.getElementById('dictForm'); 
             
-            let html = `<div style="grid-column: 1 / -1; background:white; border:1px solid #e2e8f0; border-radius:6px; padding:10px; margin-bottom:5px;">
-                <h4 style="margin:0 0 8px 0; color:var(--primary); border-bottom:2px solid #f1f5f9; padding-bottom:4px; font-size:0.85rem;">Configuraciones Específicas de Touch y Golpe de Castigo</h4>
-                <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                    <div style="flex:1; min-width:200px;">
-                        <label style="display:block; font-size:0.7rem; font-weight:bold; margin-bottom:3px; color:#475569;">Formaciones Touch (separadas por coma):</label>
-                        <input type="text" data-dict-key="__touchFormations" class="form-control dict-input" value="${dict['__touchFormations'] || '2-2-2, 2-3-2, 1-4-1'}" ${isLocked?'disabled':''}>
+            // BLOQUE 1: Configuración de Touch (cajas individuales)
+            let html = `
+            <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; flex-direction:column; gap:10px;">
+                <h4 style="margin:0; color:var(--secondary); border-bottom:2px solid #f1f5f9; padding-bottom:6px; font-size:0.85rem;">
+                    📐 1. Configuración de Touch (Lineout)
+                </h4>
+                
+                <div>
+                    <label style="display:block; font-size:0.72rem; font-weight:bold; margin-bottom:4px; color:#475569;">
+                        Formaciones de Touch:
+                    </label>
+                    <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:6px; max-height:160px; overflow-y:auto; padding-right:2px;">
+                        ${(st.touchFormations || []).map((f, idx) => `
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.7rem; color:#64748b; width:20px;">#${idx+1}</span>
+                                <input type="text" class="form-control touch-form-inp" data-idx="${idx}" value="${f}" ${isLocked?'disabled':''} style="padding:4px 8px; font-size:0.75rem;">
+                                <button class="btn-delete-item" onclick="deleteTouchFormation(${idx})" ${isLocked?'disabled':''} title="Eliminar formación">🗑️</button>
+                            </div>
+                        `).join('')}
                     </div>
-                    <div style="flex:1; min-width:200px;">
-                        <label style="display:block; font-size:0.7rem; font-weight:bold; margin-bottom:3px; color:#475569;">Posiciones Lanzamiento Touch (por coma):</label>
-                        <input type="text" data-dict-key="__touchPositions" class="form-control dict-input" value="${dict['__touchPositions'] || '1, 2, 3, 4, 5'}" ${isLocked?'disabled':''}>
+                    <div style="display:flex; gap:4px;">
+                        <input type="text" id="newTouchFormInp" class="form-control" placeholder="+ Nueva formación (ej. 1-3-2)..." style="font-size:0.72rem; padding:4px 8px;" ${isLocked?'disabled':''}>
+                        <button class="btn-sm-action" style="background:var(--secondary); color:white;" onclick="addTouchFormation()" ${isLocked?'disabled':''}>Añadir</button>
                     </div>
-                    <div style="flex:2; min-width:280px;">
-                        <label style="display:block; font-size:0.7rem; font-weight:bold; margin-bottom:3px; color:#475569;">Motivos Golpe de Castigo (separados por coma):</label>
-                        <input type="text" data-dict-key="__penaltyReasons" class="form-control dict-input" value="${dict['__penaltyReasons'] || 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar'}" ${isLocked?'disabled':''}>
+                </div>
+
+                <div style="border-top:1px dashed #cbd5e1; padding-top:8px;">
+                    <label style="display:block; font-size:0.72rem; font-weight:bold; margin-bottom:4px; color:#475569;">
+                        Posiciones de Lanzamiento:
+                    </label>
+                    <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:6px; max-height:160px; overflow-y:auto; padding-right:2px;">
+                        ${(st.touchPositions || []).map((p, idx) => `
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.7rem; color:#64748b; width:20px;">#${idx+1}</span>
+                                <input type="text" class="form-control touch-pos-inp" data-idx="${idx}" value="${p}" ${isLocked?'disabled':''} style="padding:4px 8px; font-size:0.75rem;">
+                                <button class="btn-delete-item" onclick="deleteTouchPosition(${idx})" ${isLocked?'disabled':''} title="Eliminar posición">🗑️</button>
+                            </div>
+                        `).join('')}
                     </div>
+                    <div style="display:flex; gap:4px;">
+                        <input type="text" id="newTouchPosInp" class="form-control" placeholder="+ Nueva posición (ej. 6)..." style="font-size:0.72rem; padding:4px 8px;" ${isLocked?'disabled':''}>
+                        <button class="btn-sm-action" style="background:var(--secondary); color:white;" onclick="addTouchPosition()" ${isLocked?'disabled':''}>Añadir</button>
+                    </div>
+                </div>
+            </div>`;
+
+            // BLOQUE 2: Configuración de Golpe de Castigo (cajas individuales)
+            html += `
+            <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+                <h4 style="margin:0; color:var(--danger); border-bottom:2px solid #f1f5f9; padding-bottom:6px; font-size:0.85rem;">
+                    🛑 2. Motivos de Falta (Golpe de Castigo)
+                </h4>
+                <label style="display:block; font-size:0.72rem; font-weight:bold; margin-bottom:2px; color:#475569;">
+                    Botones de motivos que se mostrarán en la ventana emergente:
+                </label>
+                <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:6px; max-height:260px; overflow-y:auto; padding-right:2px;">
+                    ${(st.penaltyReasons || []).map((r, idx) => `
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:0.7rem; color:#64748b; width:20px;">#${idx+1}</span>
+                            <input type="text" class="form-control penalty-reason-inp" data-idx="${idx}" value="${r}" ${isLocked?'disabled':''} style="padding:4px 8px; font-size:0.75rem;">
+                            <button class="btn-delete-item" onclick="deletePenaltyReason(${idx})" ${isLocked?'disabled':''} title="Eliminar motivo">🗑️</button>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="newPenaltyReasonInp" class="form-control" placeholder="+ Nuevo motivo de falta..." style="font-size:0.72rem; padding:4px 8px;" ${isLocked?'disabled':''}>
+                    <button class="btn-sm-action" style="background:var(--danger); color:white;" onclick="addPenaltyReason()" ${isLocked?'disabled':''}>Añadir</button>
                 </div>
             </div>`;
             
@@ -1696,10 +1920,10 @@
             const allModKeys = ['GENERAL', ...Object.keys(st.modules)];
             allModKeys.forEach(mod => {
                 const isGen = mod === 'GENERAL';
-                const modObj = isGen ? { name: '1. General', color: 'var(--secondary)', icon: '📌', isCustom: false } : st.modules[mod];
+                const modObj = isGen ? { name: 'General', color: 'var(--secondary)', icon: '📌', isCustom: false } : st.modules[mod];
                 if (!modObj) return;
 
-                const title = isGen ? '1. General' : `${modObj.icon} ${modObj.name}`;
+                const title = isGen ? '📌 General' : `${modObj.icon} ${modObj.name}`;
                 const clr = modObj.color || 'var(--secondary)';
                 
                 const deleteModBtn = modObj.isCustom 
@@ -1734,12 +1958,30 @@
         }
 
         function saveSettings() {
+            // Guardar formaciones de touch desde cajas individuales
+            const newTouchForms = Array.from(document.querySelectorAll('.touch-form-inp')).map(inp => inp.value.trim()).filter(Boolean);
+            if (newTouchForms.length > 0) st.touchFormations = newTouchForms;
+
+            // Guardar posiciones de touch desde cajas individuales
+            const newTouchPos = Array.from(document.querySelectorAll('.touch-pos-inp')).map(inp => inp.value.trim()).filter(Boolean);
+            if (newTouchPos.length > 0) st.touchPositions = newTouchPos;
+
+            // Guardar motivos de falta de golpe de castigo desde cajas individuales
+            const newPenaltyReasons = Array.from(document.querySelectorAll('.penalty-reason-inp')).map(inp => inp.value.trim()).filter(Boolean);
+            if (newPenaltyReasons.length > 0) st.penaltyReasons = newPenaltyReasons;
+
+            dict['__touchFormations'] = st.touchFormations.join(', ');
+            dict['__touchPositions'] = st.touchPositions.join(', ');
+            dict['__penaltyReasons'] = st.penaltyReasons.join(', ');
+
+            // Guardar diccionario de renombres
             document.querySelectorAll('.dict-input').forEach(inp => {
                 const k = inp.getAttribute('data-dict-key');
                 if (k) dict[k] = inp.value.trim() || k.split('|').pop();
             });
             localStorage.setItem('ruggerDict', JSON.stringify(dict)); 
             
+            // Guardar visibilidad y orden de fases
             const allModKeys = ['GENERAL', ...Object.keys(st.modules)];
             allModKeys.forEach(mod => {
                 let currentOrder = st.layout.modules[mod] || [];
@@ -1784,21 +2026,20 @@
             
             document.getElementById('scoreLblL').innerText = sL; document.getElementById('scoreLblV').innerText = sV;
             document.getElementById('stLblL').innerText = sL; document.getElementById('stLblV').innerText = sV;
-            document.getElementById('btnTeamL').innerText = `Posesión: ${sL}`; document.getElementById('btnTeamV').innerText = `Posesión: ${sV}`;
-            
-            if(st.team === 'Local') document.getElementById('btnTeamL').classList.add('selected');
-            else if(st.team === 'Visitante') document.getElementById('btnTeamV').classList.add('selected');
-            else {
-                document.getElementById('btnTeamL').classList.remove('selected');
-                document.getElementById('btnTeamV').classList.remove('selected');
-            }
 
             const modObj = st.modules[st.mod] || DEFAULT_MODULES.ATAQUE;
             const mb = document.getElementById('moduleBadge');
-            mb.innerText = `${modObj.icon} MÓDULO ${modObj.name.toUpperCase()}`;
+            mb.innerText = `${modObj.icon} ${modObj.name.toUpperCase()}`;
             mb.style.backgroundColor = modObj.color;
 
-            applyColumnOrder(); renderColumns(); updateTime(); updateStatsUI(); updateLogUI(); initPitch(); updateLockState();
+            applyColumnOrder(); 
+            renderColumns(); 
+            updateTime(); 
+            updateStatsUI(); 
+            updateLogUI(); 
+            initPitch(); 
+            updatePitchBar();
+            updateLockState(); 
             
             requestFullscreenAndNav('screen-tracker'); 
             saveState();
@@ -1855,7 +2096,13 @@
         }
         
         function toggleZoneLabels() { st.areZonesHidden = !st.areZonesHidden; document.body.classList.toggle('hide-zone-labels', st.areZonesHidden); saveState(); }
-        function togglePitchFlip() { st.isFlipped = !st.isFlipped; document.getElementById('btnFlipPitch').innerText = st.isFlipped ? "⬅️ SENTIDO DE ATAQUE" : "SENTIDO DE ATAQUE ➡️"; initPitch(); saveState(); }
+        
+        function togglePitchFlip() { 
+            st.isFlipped = !st.isFlipped; 
+            initPitch(); 
+            updatePitchBar(); 
+            saveState(); 
+        }
 
         function initPitch() {
             const pc = document.getElementById('pitchGrid'); pc.innerHTML = '';
@@ -1887,10 +2134,7 @@
         function selectTeam(t, silent = false) { 
             const prevTeam = st.team;
             st.team = t; 
-            const btnL = document.getElementById('btnTeamL');
-            const btnV = document.getElementById('btnTeamV');
-            if (btnL) btnL.classList.toggle('selected', t === 'Local'); 
-            if (btnV) btnV.classList.toggle('selected', t === 'Visitante'); 
+            updatePitchBar();
 
             if (t) {
                 if (t === st.myTeam && st.modules['ATAQUE']) {
@@ -1964,12 +2208,14 @@
             document.getElementById('col3').style.order = st.layout.colOrder.indexOf('SUBFASES');
         }
 
+        // Renderizado donde los botones ocupan todo el espacio disponible en su caja
         function renderColumns() {
             const c1 = document.getElementById('col1-content'); 
             c1.innerHTML = '';
-            // Matriz fija de 5 columnas para Columna 1 General
+            // Matriz 5 columnas x 2 filas para General
             c1.style.gridTemplateColumns = 'repeat(5, 1fr)';
-            c1.style.gridAutoRows = '1fr';
+            c1.style.gridTemplateRows = 'repeat(2, 1fr)';
+            c1.style.height = '100%';
 
             const gEvents = st.layout.modules['GENERAL'] || [];
             gEvents.forEach((e, idx) => {
@@ -1993,15 +2239,17 @@
 
             const c2 = document.getElementById('col2-content'); 
             c2.innerHTML = '';
+            c2.style.height = '100%';
             
             const mEvents = st.layout.modules[st.mod] || [];
-            // Distribución dinámica para Columna 2: 4 columnas si > 8 botones (Ataque), o 2 columnas si <= 8 (Defensa)
+            // Distribución para Columna 2: 4 columnas x 3 filas si > 8 botones (Ataque), o 2 columnas x 3 filas si <= 8 (Defensa)
             if (mEvents.length > 8) {
                 c2.style.gridTemplateColumns = 'repeat(4, 1fr)';
+                c2.style.gridTemplateRows = 'repeat(3, 1fr)';
             } else {
                 c2.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                c2.style.gridTemplateRows = 'repeat(3, 1fr)';
             }
-            c2.style.gridAutoRows = '1fr';
 
             mEvents.forEach((e, idx) => {
                 const b = document.createElement('button'); 
@@ -2020,11 +2268,8 @@
                 c2.appendChild(b);
             });
 
-            // Columna 3 Subfases en 2 columnas para erradicar cualquier desbordamiento vertical
-            const c3 = document.getElementById('col3-content');
-            c3.style.gridTemplateColumns = 'repeat(2, 1fr)';
-            c3.style.gridAutoRows = 'minmax(32px, 1fr)';
             clearSub();
+            setTimeout(checkButtonBoxesOverflow, 60);
         }
 
         function selectButtonGroupItem(groupId, val, element) {
@@ -2065,7 +2310,7 @@
 
             const fGroup = document.getElementById('touch-formation-group');
             fGroup.innerHTML = '';
-            const forms = (dict['__touchFormations'] || '2-2-2, 2-3-2, 1-4-1').split(',').map(s=>s.trim());
+            const forms = (st.touchFormations && st.touchFormations.length > 0) ? st.touchFormations : (dict['__touchFormations'] || '2-2-2, 2-3-2, 1-4-1').split(',').map(s=>s.trim());
             forms.forEach(f => {
                 const d = document.createElement('div');
                 d.className = 'btn-group-item';
@@ -2077,7 +2322,7 @@
 
             const pGroup = document.getElementById('touch-position-group');
             pGroup.innerHTML = '';
-            const pos = (dict['__touchPositions'] || '1, 2, 3, 4, 5').split(',').map(s=>s.trim());
+            const pos = (st.touchPositions && st.touchPositions.length > 0) ? st.touchPositions : (dict['__touchPositions'] || '1, 2, 3, 4, 5').split(',').map(s=>s.trim());
             pos.forEach(p => {
                 const d = document.createElement('div');
                 d.className = 'btn-group-item';
@@ -2099,11 +2344,11 @@
             const pGroup = document.getElementById('penalty-reason-group');
             if (!pGroup) return;
             pGroup.innerHTML = '';
-            const reasons = (dict['__penaltyReasons'] || 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar').split(',').map(s=>s.trim());
+            const reasons = (st.penaltyReasons && st.penaltyReasons.length > 0) ? st.penaltyReasons : (dict['__penaltyReasons'] || 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar').split(',').map(s=>s.trim());
             reasons.forEach(r => {
                 const d = document.createElement('div');
                 d.className = 'btn-group-item';
-                d.style.fontSize = '0.65rem';
+                d.style.fontSize = '0.62rem';
                 d.style.padding = '5px 2px';
                 d.innerText = r;
                 d.onclick = function() { selectButtonGroupItem('penalty-reason-group', r, this); };
@@ -2138,7 +2383,7 @@
             }
 
             if (!st.team && evLower === 'ensayo') {
-                showAppAlert("Selecciona la Posesión en la parte superior antes de registrar un Ensayo.");
+                showAppAlert("Selecciona la Posesión en la barra inferior del terreno antes de registrar un Ensayo.");
                 return;
             }
 
@@ -2190,19 +2435,33 @@
             c3.innerHTML = '';
             
             if(subs && subs.length > 0) {
+                // Configurar subfases para ocupar todo el espacio disponible en su caja (2 columnas)
+                const rowCount = Math.ceil(subs.length / 2);
+                c3.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                c3.style.gridTemplateRows = `repeat(${rowCount}, 1fr)`;
+                c3.style.height = '100%';
+
                 subs.forEach(s => {
                     const ck = `${ev}|${s}`; const b = document.createElement('button'); b.className = 'evt-btn'; b.innerText = dTranslate(ck);
                     b.style.backgroundColor = '#eff6ff'; b.style.borderColor = '#93c5fd'; b.style.color = '#1e40af';
                     b.onclick = () => commitEvent(s, ck); c3.appendChild(b);
                 });
                 document.getElementById('statusBar').innerText = `Seleccionado: ${dTranslate(ev)}. Esperando subfase...`;
-            } else commitEvent("", null);
+            } else {
+                commitEvent("", null);
+            }
+
+            setTimeout(checkButtonBoxesOverflow, 60);
         }
 
         function clearSub() { 
             st.pending = null; 
             document.querySelectorAll('#col1-content .evt-btn, #col2-content .evt-btn').forEach(btn => btn.classList.remove('active-phase'));
-            document.getElementById('col3-content').innerHTML = '<div class="subfase-placeholder">Esperando acción en Col 1 o 2...</div>'; 
+            const c3 = document.getElementById('col3-content');
+            c3.innerHTML = '<div class="subfase-placeholder">Esperando acción en Col 1 o 2...</div>'; 
+            c3.style.gridTemplateColumns = '1fr';
+            c3.style.gridTemplateRows = '1fr';
+            c3.style.height = '100%';
             closeTouchPopup();
             closePenaltyPopup();
         }
@@ -2232,7 +2491,7 @@
         }
 
         function commitEvent(subRaw, subKey) {
-            if(!st.team) { showAppAlert("Selecciona el equipo de posesión en la parte superior."); return; }
+            if(!st.team) { showAppAlert("Selecciona el equipo de posesión en la barra inferior del terreno."); return; }
             
             const prevScoreL = document.getElementById('scoreL').value;
             const prevScoreV = document.getElementById('scoreV').value;
@@ -2333,7 +2592,7 @@
 
             clearSub(); updateLogUI(); saveState();
 
-            // Automatismo de rugby: Tras Ensayo normal se despliega directamente la Conversión
+            // Despliegue automático de la conversión tras ensayo normal
             if (wasEnsayoNormal) {
                 handleEventClick('Conversión', 'Módulo');
             }
@@ -2405,10 +2664,7 @@
                 selectTeam(lastAction.teamKey, true);
             } else {
                 st.team = null;
-                const btnL = document.getElementById('btnTeamL');
-                const btnV = document.getElementById('btnTeamV');
-                if (btnL) btnL.classList.remove('selected');
-                if (btnV) btnV.classList.remove('selected');
+                updatePitchBar();
             }
 
             if (lastAction.prevState && lastAction.prevState.zone && lastAction.prevState.zone !== st.zone) {
@@ -2465,10 +2721,7 @@
                 selectTeam(teamToRestore, true);
             } else {
                 st.team = null;
-                const btnL = document.getElementById('btnTeamL');
-                const btnV = document.getElementById('btnTeamV');
-                if (btnL) btnL.classList.remove('selected');
-                if (btnV) btnV.classList.remove('selected');
+                updatePitchBar();
             }
 
             if (action.zone && action.zone !== st.zone) {
@@ -2583,10 +2836,7 @@
                 
                 st.zone = 'Z4-Central';
                 st.team = null;
-                const btnL = document.getElementById('btnTeamL');
-                const btnV = document.getElementById('btnTeamV');
-                if (btnL) btnL.classList.remove('selected');
-                if (btnV) btnV.classList.remove('selected');
+                updatePitchBar();
                 initPitch();
 
                 updateTime(); 
