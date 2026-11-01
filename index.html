@@ -28,7 +28,7 @@
         #portraitWarning { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--primary); color: white; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
         @media screen and (orientation: portrait) { #portraitWarning { display: flex; } .spa-screen { display: none !important; } }
 
-        .spa-screen { display: none; width: 100vw; height: 100vh; padding: 8px; flex-direction: column; }
+        .spa-screen { display: none; width: 100vw; height: 100vh; padding: 6px 8px; flex-direction: column; }
         .spa-screen.active { display: flex; }
 
         .card { margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
@@ -55,38 +55,37 @@
 
         .btn-start-match { background: var(--success); width: 100%; display: block; margin-top: 10px;}
 
-        .top-bar { display: flex; justify-content: space-between; align-items: center; background: white; padding: 6px 10px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0; }
-        .timer-section { display: flex; align-items: center; gap: 10px; }
-        .timer-display { font-size: 1.3rem; font-weight: bold; font-variant-numeric: tabular-nums; }
-        .period-toggle { font-weight: bold; cursor: pointer; padding: 4px 8px; border: 2px solid var(--primary); border-radius: 5px; font-size: 0.85rem; }
-        .score-section { display: flex; gap: 12px; align-items: center; font-weight: bold; font-size: 1.1rem; }
-        .score-input { width: 45px; font-size: 1.1rem; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 2px; }
-        .module-badge { padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; color: white; letter-spacing: 0.5px;}
-        .action-buttons { display: flex; gap: 6px; align-items: center; }
-        .action-buttons button { border: none; border-radius: 4px; font-weight: bold; cursor: pointer; color: white; font-size: 0.8rem; padding: 8px 12px; transition: all 0.2s; }
-        .btn-play { background: var(--success); } .btn-export { background: var(--danger); } .btn-menu { background: #64748b; } .btn-reset { background: var(--warning); color: #000; } .btn-icon { background: #475569; padding: 8px; font-size: 0.9rem;}
+        .top-bar { display: flex; justify-content: space-between; align-items: center; background: white; padding: 4px 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0; }
+        .timer-section { display: flex; align-items: center; gap: 8px; }
+        .timer-display { font-size: 1.25rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+        .period-toggle { font-weight: bold; cursor: pointer; padding: 3px 6px; border: 2px solid var(--primary); border-radius: 5px; font-size: 0.8rem; }
+        .score-section { display: flex; gap: 10px; align-items: center; font-weight: bold; font-size: 1.05rem; }
+        .score-input { width: 42px; font-size: 1.05rem; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 2px; }
+        .module-badge { padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; letter-spacing: 0.5px;}
+        .action-buttons { display: flex; gap: 5px; align-items: center; }
+        .action-buttons button { border: none; border-radius: 4px; font-weight: bold; cursor: pointer; color: white; font-size: 0.75rem; padding: 6px 10px; transition: all 0.2s; }
+        .btn-play { background: var(--success); } .btn-export { background: var(--danger); } .btn-menu { background: #64748b; } .btn-reset { background: var(--warning); color: #000; } .btn-icon { background: #475569; padding: 6px 8px; font-size: 0.85rem;}
         .btn-edit-layout { background: #8b5cf6; } .btn-edit-layout.active { background: var(--danger); }
         
-        .btn-undo { background: var(--warning); color: #000; border: none; padding: 4px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+        .btn-undo { background: var(--warning); color: #000; border: none; padding: 4px 8px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
         .btn-undo:hover { filter: brightness(0.95); }
         .btn-undo:active { transform: scale(0.95); }
-        .btn-redo { background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+        .btn-redo { background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
         .btn-redo:hover { background: #cbd5e1; }
         .btn-redo:active { transform: scale(0.95); }
 
-        .btn-undo-mini, .btn-redo-mini { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; padding: 2px 6px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.65rem; display: flex; align-items: center; gap: 2px; }
+        .btn-undo-mini, .btn-redo-mini { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; padding: 2px 5px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.65rem; display: flex; align-items: center; gap: 2px; }
         .btn-redo-mini { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
-        .btn-undo-mini:hover { background: #fde68a; }
-        .btn-redo-mini:hover { background: #e2e8f0; }
 
-        .middle-section { display: flex; flex-shrink: 0; height: 38vh; gap: 8px; margin: 8px 0; }
+        /* Ajuste de altura a 32vh para garantizar visibilidad total del panel de control */
+        .middle-section { display: flex; flex-shrink: 0; height: 32vh; max-height: 33vh; min-height: 180px; gap: 8px; margin: 4px 0; }
         
         .pitch-container { flex: 2.5; display: flex; flex-direction: column; background: #000; border: 2px solid #000; border-radius: 6px; overflow: hidden;}
         .pitch-wrapper { position: relative; flex: 1; display: flex; }
         .pitch-grid { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(3, 1fr); gap: 0; background: #000; }
         
         .pitch-overlays { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-        .zone { display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: bold; cursor: pointer; border: 1px dashed rgba(255,255,255,0.25); user-select: none; position: relative; }
+        .zone { display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 0.72rem; font-weight: bold; cursor: pointer; border: 1px dashed rgba(255,255,255,0.25); user-select: none; position: relative; }
         
         .zone.selected { 
             border: 3px solid #fff !important; 
@@ -101,8 +100,8 @@
             transform: translate(-50%, -50%);
             width: 35%;
             height: 35%;
-            min-width: 22px;
-            min-height: 22px;
+            min-width: 20px;
+            min-height: 20px;
             background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cellipse cx='50' cy='50' rx='45' ry='30' fill='%23ffffff' stroke='%2314532d' stroke-width='4' transform='rotate(-25 50 50)'/%3E%3Cpath d='M15,35 Q50,15 85,35' fill='none' stroke='%2314532d' stroke-width='3' transform='rotate(-25 50 50)'/%3E%3Cpath d='M15,65 Q50,85 85,65' fill='none' stroke='%23333333' stroke-width='3' transform='rotate(-25 50 50)'/%3E%3Ctext x='50' y='62' font-family='sans-serif' font-weight='900' font-size='32' font-style='italic' text-anchor='middle'%3E%3Ctspan fill='%2314532d'%3ER%3C/tspan%3E%3Ctspan fill='%23333333'%3EM%3C/tspan%3E%3C/text%3E%3C/svg%3E");
             background-size: contain;
             background-position: center;
@@ -112,9 +111,7 @@
             filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4));
         }
 
-        .zone.selected span { 
-            display: none !important;
-        }
+        .zone.selected span { display: none !important; }
 
         .z1 { background-color: var(--g1); } .z2 { background-color: var(--g2); } .z3 { background-color: var(--g3); } .z4 { background-color: var(--g4); } .z5 { background-color: var(--g5); } .z6 { background-color: var(--g6); } .z7 { background-color: var(--g7); }
         
@@ -125,14 +122,14 @@
 
         .horizontal-line { position: absolute; left: calc(100% / 7); width: calc((100% / 7) * 5); border-top: 2px dashed rgba(255,255,255,0.4); }
         .line-5m-horizontal { position: absolute; left: calc(100% / 7); width: calc((100% / 7) * 5); border-top: 2px dotted rgba(255,255,255,0.35); pointer-events: none; }
-        .vertical-line { position: absolute; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,0.6); transform: translateX(-50%); display: flex; flex-direction: column; padding-top: 6px; align-items: center; }
+        .vertical-line { position: absolute; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,0.6); transform: translateX(-50%); display: flex; flex-direction: column; padding-top: 4px; align-items: center; }
         .vertical-line.center { background: rgba(255,255,255,0.8); }
         .vertical-line.dashed { background: transparent; border-left: 2px dashed rgba(255,255,255,0.7); width: 0; }
-        .vertical-line span { color: #ffffff; font-size: 0.6rem; font-weight: 800; background: rgba(0,0,0,0.75); padding: 2px 5px; border-radius: 4px; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,0.6); letter-spacing: 0.5px; }
-        .line-5m-vertical { position: absolute; top: 0; height: 100%; border-left: 2px dotted rgba(255,255,255,0.35); pointer-events: none; display: flex; flex-direction: column; padding-top: 6px; align-items: center; }
-        .line-5m-vertical span { color: rgba(255,255,255,0.9); font-size: 0.55rem; font-weight: bold; background: rgba(0,0,0,0.5); padding: 1px 4px; border-radius: 3px; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.5); letter-spacing: 0.5px; }
+        .vertical-line span { color: #ffffff; font-size: 0.55rem; font-weight: 800; background: rgba(0,0,0,0.75); padding: 1px 4px; border-radius: 4px; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,0.6); letter-spacing: 0.5px; }
+        .line-5m-vertical { position: absolute; top: 0; height: 100%; border-left: 2px dotted rgba(255,255,255,0.35); pointer-events: none; display: flex; flex-direction: column; padding-top: 4px; align-items: center; }
+        .line-5m-vertical span { color: rgba(255,255,255,0.9); font-size: 0.5rem; font-weight: bold; background: rgba(0,0,0,0.5); padding: 1px 3px; border-radius: 3px; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.5); letter-spacing: 0.5px; }
         
-        .goalpost { position: absolute; width: 18px; height: 11%; top: 44.5%; z-index: 10; pointer-events: none;}
+        .goalpost { position: absolute; width: 16px; height: 11%; top: 44.5%; z-index: 10; pointer-events: none;}
         .goalpost.left { left: calc(100% / 7 * 1); transform: translateX(-100%) skewY(-22deg); }
         .goalpost.right { left: calc(100% / 7 * 6); transform: translateX(0%) skewY(22deg); }
         .goalpost .post { position: absolute; width: 100%; height: 3px; background: #fef08a; border-bottom: 1px solid #b45309; }
@@ -141,51 +138,54 @@
         .goalpost .post.top { top: 0; }
         .goalpost .post.bottom { bottom: 0; }
         .goalpost .crossbar { position: absolute; width: 3px; height: 100%; background: #fef08a; left: 45%; border-right: 1px solid #b45309; }
-        .goalpost.left .crossbar { box-shadow: -2px 3px 3px rgba(0,0,0,0.6); }
-        .goalpost.right .crossbar { box-shadow: 2px 3px 3px rgba(0,0,0,0.6); }
 
-        .attack-direction { height: 20px; background: #e2e8f0; color: #475569; font-size: 0.65rem; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; text-transform: uppercase; border-top: 1px solid #cbd5e1; user-select: none;}
+        .attack-direction { height: 18px; background: #e2e8f0; color: #475569; font-size: 0.62rem; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; text-transform: uppercase; border-top: 1px solid #cbd5e1; user-select: none;}
 
-        .log-panel { flex: 1.2; background: white; border-radius: 6px; padding: 8px; border: 1px solid #cbd5e1; display: flex; flex-direction: column; overflow: hidden; }
-        .log-title { font-size: 0.75rem; font-weight: bold; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; color: var(--primary); }
-        .log-list { list-style: none; padding: 0; margin: 0; font-size: 0.65rem; overflow-y: auto; flex: 1; border-top: 1px solid #e2e8f0; padding-top: 4px;}
-        .log-list li { border-bottom: 1px dashed #f1f5f9; padding: 3px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .log-panel { flex: 1.2; background: white; border-radius: 6px; padding: 6px; border: 1px solid #cbd5e1; display: flex; flex-direction: column; overflow: hidden; }
+        .log-title { font-size: 0.72rem; font-weight: bold; border-bottom: 2px solid #e2e8f0; padding-bottom: 3px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; color: var(--primary); }
+        .log-list { list-style: none; padding: 0; margin: 0; font-size: 0.62rem; overflow-y: auto; flex: 1; border-top: 1px solid #e2e8f0; padding-top: 3px;}
+        .log-list li { border-bottom: 1px dashed #f1f5f9; padding: 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .live-stats { display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px; flex-shrink: 0; }
-        .stat-row { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: bold; color: #475569; }
-        .stat-bar-bg { display: flex; height: 6px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
+        .live-stats { display: flex; flex-direction: column; gap: 3px; margin-bottom: 3px; flex-shrink: 0; }
+        .stat-row { display: flex; justify-content: space-between; font-size: 0.62rem; font-weight: bold; color: #475569; }
+        .stat-bar-bg { display: flex; height: 5px; width: 100%; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
         .stat-bar-fill { height: 100%; transition: width 0.3s; }
         
-        .stats-table { width:100%; font-size:0.6rem; text-align:center; border-collapse:collapse; margin-bottom:6px; }
+        .stats-table { width:100%; font-size:0.58rem; text-align:center; border-collapse:collapse; margin-bottom:4px; }
         .stats-table th { color:#64748b; border-bottom:1px solid #e2e8f0; padding-bottom:2px; }
         .stats-table td { padding: 1px 0; font-variant-numeric: tabular-nums;}
 
-        .bottom-panel { background: white; padding: 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 8px; flex: 1; }
-        .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; height: 36px; flex-shrink: 0; }
-        .team-btn { font-size: 0.9rem; font-weight: bold; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.2s;}
+        .bottom-panel { background: white; padding: 6px 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow: hidden; }
+        .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; height: 32px; flex-shrink: 0; }
+        .team-btn { font-size: 0.85rem; font-weight: bold; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: all 0.2s;}
         .team-btn-local { background: var(--bg-local); color: var(--primary); border-color: var(--border-local); }
         .team-btn-local.selected { background: var(--border-local); color: white; }
         .team-btn-visitor { background: var(--bg-visitor); color: var(--primary); border-color: var(--border-visitor); }
         .team-btn-visitor.selected { background: var(--border-visitor); color: white; }
 
-        .columns-3-container { flex: 1; display: flex; gap: 8px; min-height: 0; }
-        .column { display: flex; flex-direction: column; gap: 4px; background: #f8fafc; padding: 6px; border-radius: 6px; border: 1px solid #cbd5e1; overflow-y: auto; }
+        .columns-3-container { flex: 1; display: flex; gap: 6px; min-height: 0; overflow: hidden; }
+        .column { display: flex; flex-direction: column; gap: 4px; background: #f8fafc; padding: 4px 6px; border-radius: 6px; border: 1px solid #cbd5e1; overflow-y: auto; min-height: 0; }
         
-        #col1 { flex: 3; position: relative; }
-        #col2 { flex: 2; }
-        #col3 { flex: 1.5; }
+        /* Proporciones optimizadas para cuadrículas de 5 y 4 columnas */
+        #col1 { flex: 3.4; position: relative; }
+        #col2 { flex: 2.7; }
+        #col3 { flex: 2.1; }
         
-        .col-header-wrap { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 4px; margin-bottom: 2px; flex-shrink: 0; }
-        .col-header { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #475569; text-align: center; flex: 1;}
-        .col-move-btn { background: #e2e8f0; border: none; font-size: 0.7rem; cursor: pointer; padding: 2px 6px; border-radius: 3px; display: none; }
+        .col-header-wrap { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 2px; flex-shrink: 0; }
+        .col-header { font-size: 0.68rem; font-weight: bold; text-transform: uppercase; color: #475569; text-align: center; flex: 1;}
+        .col-move-btn { background: #e2e8f0; border: none; font-size: 0.7rem; cursor: pointer; padding: 1px 5px; border-radius: 3px; display: none; }
         body.is-editing .col-move-btn { display: block; }
         
-        .col-content { display: grid; grid-auto-rows: 1fr; gap: 4px; flex: 1; align-content: stretch; }
-        #col1-content { grid-template-columns: repeat(3, 1fr); }
-        #col2-content { grid-template-columns: repeat(2, 1fr); }
-        #col3-content { grid-template-columns: 1fr; }
+        .col-content { display: grid; gap: 4px; flex: 1; align-content: stretch; min-height: 0; }
         
-        .col-content .evt-btn { width: 100%; height: 100%; min-height: 36px; font-size: 0.7rem; font-weight: 600; border-radius: 4px; background: white; border: 1px solid #cbd5e1; cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; user-select: none; }
+        /* Botones optimizados contra desbordamiento */
+        .col-content .evt-btn { 
+            width: 100%; height: 100%; min-height: 32px; max-height: 52px; 
+            font-size: 0.67rem; font-weight: 600; line-height: 1.15;
+            border-radius: 4px; background: white; border: 1px solid #cbd5e1; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; 
+            text-align: center; user-select: none; padding: 2px 3px; word-break: break-word;
+        }
         .col-content .evt-btn:active { transform: scale(0.96); background: #e2e8f0; }
         
         body.is-editing .evt-btn { border: 2px dashed #94a3b8; opacity: 0.8; }
@@ -199,39 +199,42 @@
             transform: scale(0.96);
         }
 
-        .subfase-placeholder { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.75rem; font-style: italic; text-align: center; height: 100%; }
+        .subfase-placeholder { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.72rem; font-style: italic; text-align: center; height: 100%; }
 
-        .controls-row { display: flex; gap: 8px; height: 32px; flex-shrink: 0; align-items: center; }
-        .notes-input { flex: 1; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem; }
+        .controls-row { display: flex; gap: 6px; height: 30px; flex-shrink: 0; align-items: center; }
+        .notes-input { flex: 1; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.8rem; }
         
-        .btn-text-note { background: var(--secondary); color: white; border: none; font-size: 0.8rem; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-text-note { background: var(--secondary); color: white; border: none; font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .btn-text-note:active { transform: scale(0.95); opacity: 0.8; }
-        .btn-mic { background: #cbd5e1; color: var(--primary); font-size: 1.1rem; padding: 3px 10px; border-radius: 4px; border: none; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .btn-mic { background: #cbd5e1; color: var(--primary); font-size: 1rem; padding: 2px 8px; border-radius: 4px; border: none; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
         .btn-mic.recording { background: var(--danger); color: white; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 8px var(--danger); } 100% { transform: scale(1); } }
         
-        .status-text { font-size: 0.75rem; color: #64748b; font-weight: bold; width: 220px; text-align: right; }
+        .status-text { font-size: 0.72rem; color: #64748b; font-weight: bold; width: 220px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(15, 23, 42, 0.7); z-index: 1000; align-items:center; justify-content:center; backdrop-filter: blur(2px);}
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 95vw; max-width: 1250px; max-height: 92vh; display: flex; flex-direction: column;}
+        .modal-content { background: white; padding: 18px; border-radius: 10px; width: 95vw; max-width: 1250px; max-height: 92vh; display: flex; flex-direction: column;}
         
         #dictForm { flex:1; overflow-y:auto; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 15px; align-items: start; align-content: start;}
         
-        #touch-popup {
+        /* Paneles de configuración flotantes contextuales en Col 1 */
+        #touch-popup, #penalty-popup {
             display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(248, 250, 252, 0.95); z-index: 10; padding: 12px;
-            flex-direction: column; gap: 8px; border-radius: 6px;
+            background: rgba(248, 250, 252, 0.96); z-index: 10; padding: 8px 10px;
+            flex-direction: column; gap: 6px; border-radius: 6px;
             border: 2px solid var(--secondary); backdrop-filter: blur(2px); overflow-y: auto;
         }
+        #penalty-popup { border-color: var(--danger); }
 
         .btn-group { display: flex; flex-wrap: wrap; gap: 4px; }
-        .btn-group-item { flex: 1; min-width: 32px; padding: 8px 4px; text-align: center; background: white; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.75rem; color: #475569; user-select: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center;}
-        .btn-group-item.selected { background: var(--secondary); color: white; border-color: var(--secondary); transform: scale(1.05); }
+        .btn-group-item { flex: 1; min-width: 30px; padding: 6px 3px; text-align: center; background: white; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.68rem; color: #475569; user-select: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center;}
+        .btn-group-item.selected { background: var(--secondary); color: white; border-color: var(--secondary); transform: scale(1.03); }
+        #penalty-popup .btn-group-item.selected { background: var(--danger); border-color: var(--danger); }
         
         .touch-grid-0-9 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
         
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
@@ -516,18 +519,19 @@
                     </div>
                     <div id="col1-content" class="col-content"></div>
                     
+                    <!-- Popup Touch contextual -->
                     <div id="touch-popup">
-                        <h4 style="margin:0; font-size:0.8rem; color:var(--secondary); border-bottom:1px solid #cbd5e1; padding-bottom:4px; display:flex; justify-content:space-between;">
-                            Configuración Touch
-                            <button onclick="closeTouchPopup()" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:0.9rem;">X</button>
+                        <h4 style="margin:0; font-size:0.75rem; color:var(--secondary); border-bottom:1px solid #cbd5e1; padding-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                            <span>Configuración Touch</span>
+                            <button onclick="closeTouchPopup()" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:0.9rem;">✕</button>
                         </h4>
                         
-                        <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
+                        <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
                             <div>
-                                <label style="font-size:0.7rem; font-weight:bold; color:#475569; display:block; margin-bottom:4px;">Jugadores en Lineout:</label>
-                                <div style="display:flex; gap: 8px; align-items: center; margin-bottom:4px;">
-                                    <input type="text" id="touch-players-input" class="form-control" style="width: 60px; font-size:1.1rem; padding: 4px; text-align:center; font-weight:bold; color:var(--primary); background:#fff;" placeholder="" readonly>
-                                    <button onclick="document.getElementById('touch-players-input').value=''" style="background:#e2e8f0; border:none; border-radius:4px; padding:4px 8px; cursor:pointer; font-size:0.75rem; font-weight:bold; color:#475569;">Borrar</button>
+                                <label style="font-size:0.65rem; font-weight:bold; color:#475569; display:block; margin-bottom:2px;">Jugadores en Lineout:</label>
+                                <div style="display:flex; gap: 6px; align-items: center; margin-bottom:2px;">
+                                    <input type="text" id="touch-players-input" class="form-control" style="width: 50px; font-size:0.95rem; padding: 2px; text-align:center; font-weight:bold; color:var(--primary); background:#fff;" placeholder="" readonly>
+                                    <button onclick="document.getElementById('touch-players-input').value=''" style="background:#e2e8f0; border:none; border-radius:4px; padding:3px 6px; cursor:pointer; font-size:0.68rem; font-weight:bold; color:#475569;">Borrar</button>
                                 </div>
                                 <div class="btn-group touch-grid-0-9" id="touch-players-group">
                                     <div class="btn-group-item" onclick="appendTouchPlayer('1')">1</div>
@@ -544,19 +548,31 @@
                             </div>
                             
                             <div>
-                                <label style="font-size:0.7rem; font-weight:bold; color:#475569; display:block; margin-bottom:4px;">Tipo de Formación:</label>
+                                <label style="font-size:0.65rem; font-weight:bold; color:#475569; display:block; margin-bottom:2px;">Tipo de Formación:</label>
                                 <div class="btn-group" id="touch-formation-group"></div>
                                 <input type="hidden" id="touch-formation-group-val">
                             </div>
 
                             <div>
-                                <label style="font-size:0.7rem; font-weight:bold; color:#475569; display:block; margin-bottom:4px;">Posición de Lanzamiento:</label>
+                                <label style="font-size:0.65rem; font-weight:bold; color:#475569; display:block; margin-bottom:2px;">Posición de Lanzamiento:</label>
                                 <div class="btn-group" id="touch-position-group"></div>
                                 <input type="hidden" id="touch-position-group-val">
                             </div>
                         </div>
                     </div>
+
+                    <!-- Popup Motivo Golpe de Castigo contextual -->
+                    <div id="penalty-popup">
+                        <h4 style="margin:0; font-size:0.75rem; color:var(--danger); border-bottom:1px solid #cbd5e1; padding-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                            <span>Motivo Infracción (Golpe Castigo)</span>
+                            <button onclick="closePenaltyPopup()" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:0.9rem;">✕</button>
+                        </h4>
+                        <div style="font-size:0.62rem; color:#64748b;">Selecciona el motivo (opcional) antes de pulsar la subfase:</div>
+                        <div class="btn-group" id="penalty-reason-group" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:3px;"></div>
+                        <input type="hidden" id="penalty-reason-group-val">
+                    </div>
                 </div>
+
                 <div class="column" id="col2">
                     <div class="col-header-wrap" style="border-bottom-color:var(--secondary)">
                         <button class="col-move-btn" onclick="moveColumn('MODULO', 'left')">◀</button>
@@ -565,15 +581,18 @@
                     </div>
                     <div id="col2-content" class="col-content"></div>
                 </div>
+
                 <div class="column" id="col3">
                     <div class="col-header-wrap" style="border-bottom-color:var(--warning)">
                         <button class="col-move-btn" onclick="moveColumn('SUBFASES', 'left')">◀</button>
                         <div class="col-header" style="color:var(--warning)">3. Subfases</div>
                         <button class="col-move-btn" onclick="moveColumn('SUBFASES', 'right')">▶</button>
                     </div>
+                    <!-- Distribución en 2 columnas para eliminar desbordamiento vertical -->
                     <div id="col3-content" class="col-content"><div class="subfase-placeholder">Esperando fase...</div></div>
                 </div>
             </div>
+
             <div class="controls-row">
                 <button class="btn-undo" id="btnUndo" onclick="undoLastAction()" title="Deshacer última acción (Ctrl+Z)">↩️ Deshacer</button>
                 <button class="btn-redo" id="btnRedo" onclick="redoLastAction()" title="Rehacer acción (Ctrl+Y)">↪️ Rehacer</button>
@@ -586,7 +605,7 @@
     </div>
 
     <script>
-        const APP_VERSION = "0.7.1.2";
+        const APP_VERSION = "0.7.1.3";
 
         window.addEventListener('error', function(e) {
             const sb = document.getElementById('statusBar');
@@ -809,87 +828,193 @@
             }
         }
 
-        // Definiciones por defecto propuestas (sin comodines estáticos)
+        // Definiciones maestras y matrices de Fases.xlsx
         const DEFAULT_MODULES = {
-            ATAQUE: { icon: '⚔️', name: 'Ataque', desc: 'Continuidad, ventaja, rucks.', color: '#8b5cf6', isCustom: false },
-            DEFENSA: { icon: '🛡️', name: 'Defensa', desc: 'Placajes, jackal, presión.', color: '#0284c7', isCustom: false },
-            ESTATICAS: { icon: '📐', name: 'Estáticas', desc: 'Melée, Touch, Salidas.', color: '#f59e0b', isCustom: false },
-            JUEGO_PIE: { icon: '👟', name: 'Juego Pie', desc: 'Patadas y transiciones.', color: '#10b981', isCustom: false }
+            ATAQUE: { icon: '⚔️', name: 'Ataque', desc: 'Continuidad, ventaja, juego dinámico.', color: '#8b5cf6', isCustom: false },
+            DEFENSA: { icon: '🛡️', name: 'Defensa', desc: 'Placajes, recuperación, presión.', color: '#0284c7', isCustom: false }
         };
 
+        // Matriz 5 columnas x 2 filas (A1 a E2)
         const BASE_GENERAL_PROPOSED = [
-            "Touch a favor", "Touch en contra", "Melée a favor", "Melée en contra",
-            "Ensayo", "Conversión", "Drop", "Golpe castigo a favor", "Golpe castigo en contra",
-            "Golpe franco a favor", "Golpe franco en contra"
+            "Touch a favor", "Melée a favor", "Golpe castigo a favor", "Golpe franco a favor", "Reinicio a favor",
+            "Touch en contra", "Melée en contra", "Golpe castigo en contra", "Golpe franco en contra", "Reinicio en contra"
         ];
         
+        // Matriz 4 columnas x 3 filas (A1 a D3)
         const BASE_MOD_EVENTS_PROPOSED = {
             ATAQUE: [
-                "Línea de ventaja ganada", "Línea de ventaja no ganada", "Maul", "Ruck",
-                "Placaje >> Ruck", "Placaje en contra", "Patada", "Chute a palos",
-                "Balón perdido"
+                "Línea de ventaja ganada Placaje+ruck", "Ruptura línea ventaja", "Patada", "Pick and go",
+                "Línea de ventaja perdida Placaje+ruck", "Pase sobre contacto", "Maul", "Balón perdido",
+                "Ensayo", "Conversión", "Drop", "Placaje en contra"
             ],
             DEFENSA: [
-                "Golpe franco", "Balón adelantado", "Golpe de castigo en contra", "Placaje a favor",
-                "Balón recuperado"
-            ],
-            ESTATICAS: ["Melée Propia", "Melée Rival", "Touch Propia", "Touch Rival", "Maul desde Touch", "Strike Play", "Salida Centro"],
-            JUEGO_PIE: ["Box Kick", "Up & Under", "Grubber", "Exit", "Cross-kick", "Recepción Aérea"]
+                "Placaje a favor", "Conversión",
+                "Balón recuperado", "Drop",
+                "Ensayo", "Anulado"
+            ]
         };
 
         const BASE_SUB_EVENTS_PROPOSED = {
-            "Touch a favor": ["Ganada con presión", "Ganada con 1 pase de calidad (>>9)", "Ganada con 2 pases de calidad (>>10)", "Perdida por mal lanzamiento", "Perdida por salto a destiempo", "Perdida por mala coordinación lanzador-saltador", "Perdida por amago de lanzamiento", "Rápida"],
-            "Touch en contra": ["Recuperada", "Perdida"],
-            "Melée a favor": ["Ganada con presión", "Ganada con 1 pase de calidad (8>9)", "Ganada con 1 pase de calidad (9>10)", "Ganada con 2 pases de calidad (8>9>10)", "Perdida", "Golpe de castigo a favor", "Golpe de castigo en contra"],
-            "Melée en contra": ["Recuperada", "Perdida", "Golpe de castigo a favor", "Golpe de castigo en contra"],
-            "Ensayo": ["Delantera", "3/4", "Rotura de línea", "Maul", "Ensayo de castigo"],
-            "Conversión": ["Acierto", "Fallo"],
-            "Drop": ["Acierto", "Fallo"],
-            "Golpe castigo a favor": ["A palos convertido", "A palos fallado", "A touch", "Juego abierto"],
-            "Golpe castigo en contra": ["A palos convertido", "A palos fallado", "A touch", "Juego abierto"],
-            "Golpe de castigo en contra": ["Fuera de juego", "En punto de encuentro por tirarse", "En punto de encuentro por retenido", "En punto de encuentro por pescar"],
-            "Maul": ["Liberación", "Injugable"],
-            "Ruck": ["Liberación"],
-            "Placaje >> Ruck": ["Liberación"],
-            "Placaje en contra": ["Positivo", "Neutro", "Negativo"],
-            "Chute a palos": ["Conversión", "Fallo"],
-            "Placaje a favor": ["Positivo", "Neutro", "Negativo"]
+            "Touch a favor": [
+                "Ganada con presión", 
+                "Ganada 1 pase calidad", 
+                "Ganada 2 pases calidad", 
+                "Perdida mal lanzamiento", 
+                "Perdida salto a destiempo", 
+                "Perdida descoordinación lanzador-saltador", 
+                "Perdida por amago de lanzamiento", 
+                "Rápida"
+            ],
+            "Touch en contra": [
+                "Recuperada", 
+                "Perdida"
+            ],
+            "Melée a favor": [
+                "Ganada con presión", 
+                "Ganada 1 pase calidad (8>9)", 
+                "Ganada 1 pase calidad (9>10)", 
+                "Ganada 2 pases calidad (8>9>10)", 
+                "Ganada salida del 8", 
+                "Perdida", 
+                "Golpe de castigo a favor", 
+                "Golpe de castigo en contra"
+            ],
+            "Melée en contra": [
+                "Recuperada", 
+                "Perdida", 
+                "Golpe de castigo a favor", 
+                "Golpe de castigo en contra"
+            ],
+            "Golpe castigo a favor": [
+                "A palos convertido", 
+                "A palos fallado", 
+                "A touch", 
+                "Juego abierto"
+            ],
+            "Golpe castigo en contra": [
+                "A palos convertido", 
+                "A palos fallado", 
+                "A touch", 
+                "Juego abierto"
+            ],
+            "Reinicio a favor": [
+                "Ganado limpio en juego aéreo", 
+                "Ganado con presión", 
+                "Avant"
+            ],
+            "Reinicio en contra": [
+                "Ganado limpio en juego aéreo", 
+                "Ganado con presión", 
+                "Avant"
+            ],
+            "Línea de ventaja ganada Placaje+ruck": [
+                "Liberación rápida (< 3seg)", 
+                "Liberación lenta (> 3seg)"
+            ],
+            "Línea de ventaja perdida Placaje+ruck": [
+                "Liberación rápida (< 3seg)", 
+                "Liberación lenta (> 3seg)"
+            ],
+            "Ensayo": [
+                "Delantera", 
+                "3/4", 
+                "Rotura de línea", 
+                "Maul", 
+                "Ensayo de castigo"
+            ],
+            "Conversión": [
+                "Acierto", 
+                "Fallo"
+            ],
+            "Drop": [
+                "Acierto", 
+                "Fallo"
+            ],
+            "Balón perdido": [
+                "Avant", 
+                "Pescador", 
+                "Contra ruck", 
+                "Intercepción", 
+                "Chute perdido", 
+                "Maul injugable"
+            ],
+            "Placaje en contra": [
+                "Positivo", 
+                "Neutro", 
+                "Negativo"
+            ],
+            "Placaje a favor": [
+                "Positivo", 
+                "Neutro", 
+                "Negativo"
+            ],
+            "Balón recuperado": [
+                "Avant", 
+                "Pescador", 
+                "Contra ruck", 
+                "Intercepción", 
+                "Chute perdido", 
+                "Maul injugable"
+            ]
         };
 
         const RULES = {
-            "Touch a favor|Perdida por mal lanzamiento": { poss: true },
-            "Touch a favor|Perdida por salto a destiempo": { poss: true },
-            "Touch a favor|Perdida por mala coordinación lanzador-saltador": { poss: true },
-            "Touch a favor|Perdida por amago de lanzamiento": { poss: true },
+            "Touch a favor|Perdida mal lanzamiento": { poss: true },
+            "Touch a favor|Perdida salto a destiempo": { poss: true },
+            "Touch a favor|Perdida descoordinación lanzador-saltador": { poss: true },
+            "Touch a favor|Perdida por amago de lanzamiento": { poss: true, note: "Golpe franco en contra" },
+            
             "Touch en contra|Recuperada": { poss: true },
+            
             "Melée a favor|Perdida": { poss: true },
             "Melée a favor|Golpe de castigo en contra": { poss: true },
+            
             "Melée en contra|Recuperada": { poss: true },
             "Melée en contra|Golpe de castigo a favor": { poss: true },
+            
+            "Golpe castigo a favor|A palos convertido": { pts: 3, poss: true, zone: "Z4-Central" },
+            "Golpe castigo a favor|A touch": { note: "Touch a favor" },
+            
+            "Golpe castigo en contra|A palos convertido": { pts: 3, poss: true, zone: "Z4-Central" },
+            "Golpe castigo en contra|A palos fallado": { poss: true },
+            "Golpe castigo en contra|A touch": { poss: true, note: "Touch en contra" },
+            
+            "Reinicio a favor|Avant": { poss: true, note: "Melée en contra" },
+            "Reinicio en contra|Avant": { poss: true, note: "Melée a favor" },
+            
+            "Golpe franco en contra|": { poss: true },
+            
             "Ensayo|Delantera": { pts: 5 },
             "Ensayo|3/4": { pts: 5 },
             "Ensayo|Rotura de línea": { pts: 5 },
             "Ensayo|Maul": { pts: 5 },
-            "Ensayo|Ensayo de castigo": { pts: 7, poss: true },
-            "Conversión|Acierto": { pts: 2, poss: true },
-            "Conversión|Fallo": { poss: true },
-            "Golpe castigo a favor|A palos convertido": { pts: 3 },
-            "Golpe castigo en contra|A palos convertido": { poss: true, pts: 3 },
-            "Golpe castigo en contra|A palos fallado": { poss: true },
-            "Golpe castigo en contra|A touch": { poss: true },
-            "Golpe castigo en contra|Juego abierto": { poss: true },
-            "Golpe de castigo en contra|Fuera de juego": { poss: true },
-            "Golpe de castigo en contra|En punto de encuentro por tirarse": { poss: true },
-            "Golpe de castigo en contra|En punto de encuentro por retenido": { poss: true },
-            "Golpe de castigo en contra|En punto de encuentro por pescar": { poss: true },
-            "Balón adelantado|": { poss: true },
-            "Balón perdido|": { poss: true },
-            "Balón recuperado|": { poss: true }
+            "Ensayo|Ensayo de castigo": { pts: 7, poss: true, zone: "Z4-Central" },
+            
+            "Conversión|Acierto": { pts: 2, poss: true, zone: "Z4-Central" },
+            "Conversión|Fallo": { poss: true, zone: "Z4-Central" },
+            
+            "Drop|Acierto": { pts: 3, poss: true, zone: "Z4-Central" },
+            "Drop|Fallo": { poss: true, zone: "Z4-Central" },
+            
+            "Balón perdido|Avant": { poss: true, note: "Melée en contra" },
+            "Balón perdido|Pescador": { poss: true },
+            "Balón perdido|Contra ruck": { poss: true },
+            "Balón perdido|Intercepción": { poss: true },
+            "Balón perdido|Chute perdido": { poss: true },
+            "Balón perdido|Maul injugable": { poss: true },
+            
+            "Balón recuperado|Avant": { poss: true, note: "Melée a favor" },
+            "Balón recuperado|Pescador": { poss: true },
+            "Balón recuperado|Contra ruck": { poss: true },
+            "Balón recuperado|Intercepción": { poss: true },
+            "Balón recuperado|Chute perdido": { poss: true },
+            "Balón recuperado|Maul injugable": { poss: true }
         };
 
         const defaultDict = {
             '__touchFormations': '2-2-2, 2-3-2, 1-4-1',
-            '__touchPositions': '1, 2, 3, 4, 5'
+            '__touchPositions': '1, 2, 3, 4, 5',
+            '__penaltyReasons': 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar'
         };
         BASE_GENERAL_PROPOSED.forEach(e => defaultDict[e] = e);
         Object.keys(BASE_MOD_EVENTS_PROPOSED).forEach(k => BASE_MOD_EVENTS_PROPOSED[k].forEach(e => defaultDict[e] = e));
@@ -898,7 +1023,7 @@
         let dict = {...defaultDict};
         try { const stored = localStorage.getItem('ruggerDict'); if(stored) dict = {...defaultDict, ...JSON.parse(stored)}; } catch(e) {}
 
-        const STATE_KEY = 'ruggerMatch_v0712_state';
+        const STATE_KEY = 'ruggerMatch_v0713_state';
         
         let st = { 
             matchId: null,
@@ -911,9 +1036,7 @@
             availablePhases: {
                 'GENERAL': [...BASE_GENERAL_PROPOSED],
                 'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
-                'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA],
-                'ESTATICAS': [...BASE_MOD_EVENTS_PROPOSED.ESTATICAS],
-                'JUEGO_PIE': [...BASE_MOD_EVENTS_PROPOSED.JUEGO_PIE]
+                'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA]
             },
             customPhases: [],
             customSubEvents: {},
@@ -921,9 +1044,7 @@
                 modules: {
                     'GENERAL': [...BASE_GENERAL_PROPOSED],
                     'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
-                    'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA],
-                    'ESTATICAS': [...BASE_MOD_EVENTS_PROPOSED.ESTATICAS],
-                    'JUEGO_PIE': [...BASE_MOD_EVENTS_PROPOSED.JUEGO_PIE]
+                    'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA]
                 }, 
                 colOrder: ['GENERAL', 'MODULO', 'SUBFASES'] 
             },
@@ -1041,6 +1162,7 @@
             try {
                 const sL = document.getElementById('scoreL').value; const sV = document.getElementById('scoreV').value;
                 const stateToSave = {
+                    appVersion: APP_VERSION,
                     matchId: st.matchId,
                     mod: st.mod, time: st.time, period: st.period, log: st.log, masterLog: st.masterLog, redoLog: st.redoLog,
                     session: st.session, teams: st.teams, stats: st.stats, zone: st.zone, myTeam: st.myTeam,
@@ -1083,15 +1205,19 @@
                     st.customPhases = p.customPhases || [];
                     st.customSubEvents = p.customSubEvents || {};
                     
-                    st.availablePhases = p.availablePhases || {
-                        'GENERAL': [...BASE_GENERAL_PROPOSED],
-                        'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
-                        'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA],
-                        'ESTATICAS': [...BASE_MOD_EVENTS_PROPOSED.ESTATICAS],
-                        'JUEGO_PIE': [...BASE_MOD_EVENTS_PROPOSED.JUEGO_PIE]
-                    };
+                    const hasNewPhases = p.availablePhases && p.availablePhases['GENERAL'] && p.availablePhases['GENERAL'].includes('Reinicio a favor');
+                    if (hasNewPhases) {
+                        st.availablePhases = p.availablePhases;
+                    } else {
+                        st.availablePhases = {
+                            'GENERAL': [...BASE_GENERAL_PROPOSED],
+                            'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
+                            'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA]
+                        };
+                    }
 
-                    if(p.layout && p.layout.modules) {
+                    const hasNewLayout = p.layout && p.layout.modules && p.layout.modules['GENERAL'] && p.layout.modules['GENERAL'].includes('Reinicio a favor');
+                    if(hasNewLayout) {
                         st.layout = p.layout;
                         if(!st.layout.colOrder) st.layout.colOrder = ['GENERAL', 'MODULO', 'SUBFASES'];
                     } else {
@@ -1119,9 +1245,13 @@
         }
         
         function initDefaultLayout() {
-            st.layout.modules = {};
+            st.layout.modules = {
+                'GENERAL': [...BASE_GENERAL_PROPOSED],
+                'ATAQUE': [...BASE_MOD_EVENTS_PROPOSED.ATAQUE],
+                'DEFENSA': [...BASE_MOD_EVENTS_PROPOSED.DEFENSA]
+            };
             Object.keys(st.availablePhases).forEach(m => {
-                st.layout.modules[m] = [...st.availablePhases[m]];
+                if (!st.layout.modules[m]) st.layout.modules[m] = [...st.availablePhases[m]];
             });
             st.layout.colOrder = ['GENERAL', 'MODULO', 'SUBFASES'];
         }
@@ -1350,7 +1480,6 @@
             const phaseName = inp.value.trim();
             if (!phaseName) { showAppAlert("Escribe un nombre para la nueva fase."); return; }
 
-            // Comprobar si ya existe globalmente
             const allPhases = Object.keys(st.availablePhases).flatMap(k => st.availablePhases[k]);
             if (allPhases.includes(phaseName)) {
                 showAppAlert("Ya existe una fase con ese nombre.");
@@ -1499,16 +1628,20 @@
             
             const df = document.getElementById('dictForm'); 
             
-            let html = `<div style="grid-column: 1 / -1; background:white; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-bottom:5px;">
-                <h4 style="margin:0 0 10px 0; color:var(--primary); border-bottom:2px solid #f1f5f9; padding-bottom:6px;">Configuración Específica de Touch</h4>
-                <div style="display:flex; gap:15px; flex-wrap:wrap;">
+            let html = `<div style="grid-column: 1 / -1; background:white; border:1px solid #e2e8f0; border-radius:6px; padding:10px; margin-bottom:5px;">
+                <h4 style="margin:0 0 8px 0; color:var(--primary); border-bottom:2px solid #f1f5f9; padding-bottom:4px; font-size:0.85rem;">Configuraciones Específicas de Touch y Golpe de Castigo</h4>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
                     <div style="flex:1; min-width:200px;">
-                        <label style="display:block; font-size:0.75rem; font-weight:bold; margin-bottom:4px; color:#475569;">Formaciones (separadas por coma):</label>
+                        <label style="display:block; font-size:0.7rem; font-weight:bold; margin-bottom:3px; color:#475569;">Formaciones Touch (separadas por coma):</label>
                         <input type="text" data-dict-key="__touchFormations" class="form-control dict-input" value="${dict['__touchFormations'] || '2-2-2, 2-3-2, 1-4-1'}" ${isLocked?'disabled':''}>
                     </div>
                     <div style="flex:1; min-width:200px;">
-                        <label style="display:block; font-size:0.75rem; font-weight:bold; margin-bottom:4px; color:#475569;">Posiciones Lanzamiento (separadas por coma):</label>
+                        <label style="display:block; font-size:0.7rem; font-weight:bold; margin-bottom:3px; color:#475569;">Posiciones Lanzamiento Touch (por coma):</label>
                         <input type="text" data-dict-key="__touchPositions" class="form-control dict-input" value="${dict['__touchPositions'] || '1, 2, 3, 4, 5'}" ${isLocked?'disabled':''}>
+                    </div>
+                    <div style="flex:2; min-width:280px;">
+                        <label style="display:block; font-size:0.7rem; font-weight:bold; margin-bottom:3px; color:#475569;">Motivos Golpe de Castigo (separados por coma):</label>
+                        <input type="text" data-dict-key="__penaltyReasons" class="form-control dict-input" value="${dict['__penaltyReasons'] || 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar'}" ${isLocked?'disabled':''}>
                     </div>
                 </div>
             </div>`;
@@ -1551,7 +1684,6 @@
                     </div>`;
                 });
 
-                // Fila para añadir nueva subfase
                 h += `<div style="display:flex; gap:4px; margin-top:4px; margin-bottom:6px;">
                     <input type="text" id="new_sub_input_${safeId}" class="form-control" placeholder="+ Nueva subfase..." style="padding:2px 6px; font-size:0.7rem; height:24px;" ${isLocked?'disabled':''}>
                     <button class="btn-sm-action" style="padding:2px 6px; font-size:0.7rem; height:24px;" onclick="addCustomSubPhase('${ev}', '${safeId}')" ${isLocked?'disabled':''}>➕</button>
@@ -1580,7 +1712,6 @@
                         ${deleteModBtn}
                     </div>`;
                 
-                // Formulario para añadir nueva fase a este módulo
                 html += `<div style="display:flex; gap:4px; margin-bottom:10px;">
                     <input type="text" id="new_phase_input_${mod}" class="form-control" placeholder="+ Nueva fase para ${isGen?'General':modObj.name}..." style="font-size:0.75rem; padding:4px 8px;" ${isLocked?'disabled':''}>
                     <button class="btn-sm-action" style="background:${clr}; color:white;" onclick="addCustomPhase('${mod}')" ${isLocked?'disabled':''}>Añadir</button>
@@ -1834,10 +1965,17 @@
         }
 
         function renderColumns() {
-            const c1 = document.getElementById('col1-content'); c1.innerHTML = '';
+            const c1 = document.getElementById('col1-content'); 
+            c1.innerHTML = '';
+            // Matriz fija de 5 columnas para Columna 1 General
+            c1.style.gridTemplateColumns = 'repeat(5, 1fr)';
+            c1.style.gridAutoRows = '1fr';
+
             const gEvents = st.layout.modules['GENERAL'] || [];
             gEvents.forEach((e, idx) => {
-                const b = document.createElement('button'); b.className = 'evt-btn'; b.innerText = dTranslate(e);
+                const b = document.createElement('button'); 
+                b.className = 'evt-btn'; 
+                b.innerText = dTranslate(e);
                 b.setAttribute('data-ev', e);
                 if (st.editMode) {
                     if (st.moveSource && st.moveSource.colKey === 'GENERAL' && st.moveSource.idx === idx) b.classList.add('move-source');
@@ -1853,10 +1991,22 @@
             col2H.innerText = `2. ${currentModObj.name.toUpperCase()}`;
             col2H.style.color = currentModObj.color;
 
-            const c2 = document.getElementById('col2-content'); c2.innerHTML = '';
+            const c2 = document.getElementById('col2-content'); 
+            c2.innerHTML = '';
+            
             const mEvents = st.layout.modules[st.mod] || [];
+            // Distribución dinámica para Columna 2: 4 columnas si > 8 botones (Ataque), o 2 columnas si <= 8 (Defensa)
+            if (mEvents.length > 8) {
+                c2.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            } else {
+                c2.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            }
+            c2.style.gridAutoRows = '1fr';
+
             mEvents.forEach((e, idx) => {
-                const b = document.createElement('button'); b.className = 'evt-btn'; b.innerText = dTranslate(e);
+                const b = document.createElement('button'); 
+                b.className = 'evt-btn'; 
+                b.innerText = dTranslate(e);
                 b.setAttribute('data-ev', e);
                 b.style.backgroundColor = currentModObj.color + '11'; 
                 b.style.borderColor = currentModObj.color + '55'; 
@@ -1869,6 +2019,11 @@
                 }
                 c2.appendChild(b);
             });
+
+            // Columna 3 Subfases en 2 columnas para erradicar cualquier desbordamiento vertical
+            const c3 = document.getElementById('col3-content');
+            c3.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            c3.style.gridAutoRows = 'minmax(32px, 1fr)';
             clearSub();
         }
 
@@ -1936,7 +2091,31 @@
         }
 
         function closeTouchPopup() {
-            document.getElementById('touch-popup').style.display = 'none';
+            const el = document.getElementById('touch-popup');
+            if (el) el.style.display = 'none';
+        }
+
+        function openPenaltyPopup() {
+            const pGroup = document.getElementById('penalty-reason-group');
+            if (!pGroup) return;
+            pGroup.innerHTML = '';
+            const reasons = (dict['__penaltyReasons'] || 'Placaje ilegal, Ruck, Fuera de juego, Protestar, Melée, Touch, En punto de encuentro por tirarse, En punto de encuentro por retenido, En punto de encuentro por pescar').split(',').map(s=>s.trim());
+            reasons.forEach(r => {
+                const d = document.createElement('div');
+                d.className = 'btn-group-item';
+                d.style.fontSize = '0.65rem';
+                d.style.padding = '5px 2px';
+                d.innerText = r;
+                d.onclick = function() { selectButtonGroupItem('penalty-reason-group', r, this); };
+                pGroup.appendChild(d);
+            });
+            document.getElementById('penalty-reason-group-val').value = '';
+            document.getElementById('penalty-popup').style.display = 'flex';
+        }
+
+        function closePenaltyPopup() {
+            const el = document.getElementById('penalty-popup');
+            if (el) el.style.display = 'none';
         }
 
         function handleEventClick(ev, cat) {
@@ -1970,6 +2149,7 @@
                     document.getElementById('statusBar').innerText = "⚠️ Touch: Clic en Z2-Z6 lateral.";
                     document.getElementById('col3-content').innerHTML = '<div class="subfase-placeholder" style="color:var(--warning); font-weight:bold;">⚠️ Selecciona una zona lateral (Z2-Z6) en el campo para continuar con la Touch...</div>';
                     closeTouchPopup();
+                    closePenaltyPopup();
                     return;
                 }
             } else if (evLower === 'ensayo') {
@@ -1980,16 +2160,22 @@
                     document.getElementById('statusBar').innerText = `⚠️ Ensayo: Clic en Z${isMyTeamScoring?7:1}.`;
                     document.getElementById('col3-content').innerHTML = `<div class="subfase-placeholder" style="color:var(--danger); font-weight:bold;">⚠️ Para un Ensayo de este equipo, debes marcar la Zona ${isMyTeamScoring?7:1} en el campo...</div>`;
                     closeTouchPopup();
+                    closePenaltyPopup();
                     return;
                 }
             }
 
             st.awaitingZoneFor = null;
-            
-            if (evLower === 'touch a favor' || evLower === 'touch propia') {
+
+            if (evLower.includes('touch')) {
                 openTouchPopup();
+                closePenaltyPopup();
+            } else if (evLower.includes('golpe castigo') || evLower.includes('golpe de castigo')) {
+                openPenaltyPopup();
+                closeTouchPopup();
             } else {
                 closeTouchPopup();
+                closePenaltyPopup();
             }
 
             st.pending = { ev, cat }; 
@@ -2000,7 +2186,8 @@
             });
 
             const subs = getSubEventsFor(ev);
-            const c3 = document.getElementById('col3-content'); c3.innerHTML = '';
+            const c3 = document.getElementById('col3-content'); 
+            c3.innerHTML = '';
             
             if(subs && subs.length > 0) {
                 subs.forEach(s => {
@@ -2016,6 +2203,8 @@
             st.pending = null; 
             document.querySelectorAll('#col1-content .evt-btn, #col2-content .evt-btn').forEach(btn => btn.classList.remove('active-phase'));
             document.getElementById('col3-content').innerHTML = '<div class="subfase-placeholder">Esperando acción en Col 1 o 2...</div>'; 
+            closeTouchPopup();
+            closePenaltyPopup();
         }
 
         function logSystemEvent(cat, ev, sub, customPrevState = null) {
@@ -2062,14 +2251,22 @@
             let tJugadores = "";
             let tFormacion = "";
             let tLanzamiento = "";
+            let penaltyMotivo = "";
             
             let evLowerPending = st.pending.ev.toLowerCase();
-            if (evLowerPending === 'touch a favor' || evLowerPending === 'touch propia') {
+            if (evLowerPending.includes('touch')) {
                 tJugadores = document.getElementById('touch-players-input').value;
                 if (tJugadores === '1' || tJugadores === '0') tJugadores = '';
                 tFormacion = document.getElementById('touch-formation-group-val').value;
                 tLanzamiento = document.getElementById('touch-position-group-val').value;
                 closeTouchPopup();
+            } else if (evLowerPending.includes('golpe castigo') || evLowerPending.includes('golpe de castigo')) {
+                penaltyMotivo = document.getElementById('penalty-reason-group-val').value;
+                closePenaltyPopup();
+            }
+
+            if (penaltyMotivo) {
+                autoNotes += `[Motivo: ${penaltyMotivo}] `;
             }
 
             let forcedTeam = null;
@@ -2097,9 +2294,16 @@
                     else document.getElementById('scoreV').value = parseInt(document.getElementById('scoreV').value) + rule.pts;
                     autoNotes += `[Auto: +${rule.pts} Pts] `;
                 }
+                if (rule.note) {
+                    autoNotes += `[Auto: ${rule.note}] `;
+                }
                 if (rule.poss) {
                     newPossession = initiatingTeam === 'Local' ? 'Visitante' : 'Local';
                     autoNotes += `[Auto: Cambio Posesión] `;
+                }
+                if (rule.zone) {
+                    st.zone = rule.zone;
+                    initPitch();
                 }
             }
 
@@ -2123,19 +2327,15 @@
                 selectTeam(newPossession, true);
             }
 
-            if (evLowerPending === 'conversión' || (evLowerPending === 'ensayo' && subRaw === 'Ensayo de castigo')) {
-                st.zone = 'Z4-Central';
-                initPitch();
-            }
-
             document.getElementById('statusBar').innerText = `✅ Registrado: ${customEv} ${customSub ? '('+customSub+')' : ''}`;
             
             const wasEnsayoNormal = evLowerPending === 'ensayo' && subRaw !== 'Ensayo de castigo';
 
             clearSub(); updateLogUI(); saveState();
 
+            // Automatismo de rugby: Tras Ensayo normal se despliega directamente la Conversión
             if (wasEnsayoNormal) {
-                handleEventClick('Conversión', 'General');
+                handleEventClick('Conversión', 'Módulo');
             }
         }
 
