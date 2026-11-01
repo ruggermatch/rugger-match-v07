@@ -1,9 +1,10 @@
-const CACHE_NAME = 'ruggermatch-pwa-v071';
+const CACHE_NAME = 'ruggermatch-pwa-v0710';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon.jpg', // CORRECCIÓN CRÍTICA: La extensión debe coincidir con el archivo físico en GitHub
+  './icon-192.png'
+  './icon-512.png'
   'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js'
 ];
 
