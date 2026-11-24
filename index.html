@@ -839,7 +839,7 @@
             const payload = parseJwt(response.credential);
             const userId = payload.sub;
 
-            const allowedUsers = ["111156861575560627970", "103537033993342212835", "109839816249633725397", "106656794410349860754"]; 
+            const allowedUsers = ["111156861575560627970", "103537033993342212835", "109839816249633725397", "106656794410349860754","109539145122870962512"]; 
 
             if (!allowedUsers.includes(userId)) {
                 sendAuditLog('ACCESO_DENEGADO_WHITELIST', {
