@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ruggermatch-pwa-v07132';
+const CACHE_NAME = 'ruggermatch-pwa-v07133';
 const ASSETS = [
   './',
   './index.html',
